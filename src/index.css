@@ -1,6 +1,12 @@
 body {
+  background-color: rgba(0,0,0,.8);
   margin: 0;
   padding: 0;
-  font-family: 'lato', sans-serif;
+}
+
+input {
+  color: white !important;
+  text-align: center;
+  width: fit-content;
   font-weight: 300;
 }
