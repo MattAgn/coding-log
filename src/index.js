@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AnimatedNumber from 'react-animated-number';
 import ProgressBar from './components/ProgressBar';
-import SettingsComponent from './components/SettingsComponent'
+import MySettings from './components/MySettings';
 import './index.css';
 
 const styles = {
@@ -32,11 +32,16 @@ class App extends React.Component {
   constructor() {
     super();
     const savedStartingDate = localStorage.getItem('startingDate');
+    let startingDate;
     if (savedStartingDate) {
-      this.state = { startingDate: new Date(savedStartingDate)};
+      startingDate = new Date(savedStartingDate);
     } else {
-      this.state = { startingDate: new Date()};
+      startingDate = new Date();
     }
+    this.state = { 
+      startingDate: startingDate,
+      prevStartingDate: startingDate,
+    };
   };
 
   componentWillMount() {
@@ -53,33 +58,38 @@ class App extends React.Component {
 
   handleChangeDate = (event, date) => {
     this.setState(() => ({
-      startingDate: date,
-      daysCounter: this.countDays(date),
+      chosenStartingDate: date,
     }));
     localStorage.setItem('startingDate', date);
   }
 
+  handleSave = () => {
+    this.setState(prevState => ({startingDate: prevState.chosenStartingDate}));
+  }
+
 
   render() {
+    const daysCount = this.countDays(this.state.startingDate);
     return (
       <MuiThemeProvider>
         <div style={styles.container}>
           <div style={styles.header}>
             <h1 style={styles.appTitle}>My coding log</h1>
-            <SettingsComponent 
+            <MySettings 
               startingDate={this.state.startingDate}
+              handleSave={this.handleSave}
               handleChangeDate={this.handleChangeDate}/>
           </div>
           <div>
             <AnimatedNumber
               component="h1"
-              value={this.state.daysCounter}
+              value={daysCount}
               style={styles.counter}
               duration={700}
               stepPrecision={0}
             />
             <h3>days of coding everyday so far !</h3>
-            <ProgressBar counter={this.state.daysCounter} />
+            <ProgressBar counter={daysCount} />
           </div>
       </div>
     </MuiThemeProvider>

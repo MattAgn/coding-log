@@ -1,5 +1,6 @@
 import React from 'react';
 import LinearProgress from 'material-ui/LinearProgress';
+import PropTypes from 'prop-types';
 
 const styles = {
   bar: {
@@ -12,16 +13,33 @@ const styles = {
 
 
 export default class LinearProgressExampleDeterminate extends React.Component {
+  static propTypes = {
+    counter: PropTypes.number.isRequired,
+  }
+  
   constructor(props) {
     super(props);
-
     this.state = {
       completed: 0,
     };
   }
 
   componentDidMount() {
-    this.timer = setTimeout(() => this.progress(this.props.counter, this.props.counter), 400);
+    this.timer = setTimeout(() => 
+      this.progress(this.props.counter, this.props.counter)
+    , 400);
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    return {completed: 0}
+  }
+
+  shouldComponentUpdate(nextProps, prevState) {
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => 
+      this.progress(this.props.counter, this.props.counter)
+    , 400);
+    return true;
   }
 
   componentWillUnmount() {
@@ -40,7 +58,10 @@ export default class LinearProgressExampleDeterminate extends React.Component {
 
   render() {
     return (
-      <LinearProgress style={styles.bar} mode="determinate" value={this.state.completed} />
+      <LinearProgress 
+        style={styles.bar} 
+        mode="determinate" 
+        value={this.state.completed} />
     );
   }
 }

@@ -3,7 +3,6 @@ import Settings from 'material-ui/svg-icons/action/settings';
 import IconButton from 'material-ui/IconButton';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
 import DatePicker from 'material-ui/DatePicker'
 
 const styles = {
@@ -25,10 +24,16 @@ const styles = {
     position: 'absolute',
     right: '5%',
     display: 'inline-block',
+  },
+  settingName: {
+    margin: '5vh 0px 0px 0px', 
+    color:'black', 
+    fontWeight: '400', 
+    display: 'inline-block'
   }
 }
 
-export default class SettingsComponent extends Component {
+export default class MySettings extends Component {
   // eslint-disable-next-line 
   state = {
     open: false,
@@ -42,6 +47,11 @@ export default class SettingsComponent extends Component {
     this.setState({open: false});
   };
 
+  handleSave = () => {
+    this.props.handleSave();
+    this.handleClose();
+  }
+
   render() {
     const actions = [
       <FlatButton
@@ -50,10 +60,10 @@ export default class SettingsComponent extends Component {
         onClick={this.handleClose}
       />,
       <FlatButton
-        label="Submit"
+        label="Save"
         primary={true}
-        disabled={true}
-        onClick={this.handleClose}
+        keyboardFocused={true}
+        onClick={this.handleSave}
       />,
     ];
 
@@ -71,18 +81,17 @@ export default class SettingsComponent extends Component {
           actions={actions}
           modal={true}
           open={this.state.open}
+          style={{color:'black'}}
           >
-          <h4 style={{margin: '5vh 0px 0px 0px', color:'black', fontWeight: '400'}}>
-                Starting date
-              </h4>
-              <DatePicker
-                style={{display: 'inline-block'}}
-                textFieldStyle={styles.dateText}
-                id='start_date_picker'
-                defaultDate={this.props.startingDate}
-                onChange={this.props.handleChangeDate}
-              />
-          </Dialog>
+          <h4 style={styles.settingName}>Starting date : </h4>
+          <DatePicker
+            style={{display: 'inline-block'}}
+            textFieldStyle={styles.dateText}
+            id='start_date_picker'
+            defaultDate={this.props.startingDate}
+            onChange={this.props.handleChangeDate}
+          />
+        </Dialog>
       </React.Fragment>
     )
   }
