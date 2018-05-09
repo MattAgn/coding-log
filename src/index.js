@@ -2,8 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import DatePicker from 'material-ui/DatePicker';
+import LinearProgress from 'material-ui/LinearProgress';
 import AnimatedNumber from 'react-animated-number';
 import './index.css';
+import ProgressBar from './components/ProgressBar'
 
 const defaultStyle = {
   color: 'white',
@@ -94,6 +96,7 @@ class App extends React.Component {
               stepPrecision={0}
             />
             <h3 style={defaultStyle}>days of coding everyday so far !</h3>
+            <ProgressBar counter={this.state.daysCounter} />
           </div>
       </div>
     </MuiThemeProvider>
