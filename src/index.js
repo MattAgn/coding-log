@@ -40,7 +40,7 @@ class App extends React.Component {
     }
     this.state = { 
       startingDate: startingDate,
-      prevStartingDate: startingDate,
+      chosenStartingDate: startingDate,
     };
   };
 
