@@ -1,3 +1,9 @@
+* {
+  font-family: "lato", sans-serif;
+  color: white;
+  font-weight: 300;
+}
+
 body {
   background-color: rgba(0,0,0,.8);
   margin: 0;
@@ -5,7 +11,7 @@ body {
 }
 
 input {
-  color: white !important;
+  /* color: white !important; */
   text-align: center;
   width: fit-content;
   font-weight: 300;

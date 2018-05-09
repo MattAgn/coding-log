@@ -1,17 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import DatePicker from 'material-ui/DatePicker';
-import LinearProgress from 'material-ui/LinearProgress';
 import AnimatedNumber from 'react-animated-number';
+import ProgressBar from './components/ProgressBar';
+import SettingsComponent from './components/SettingsComponent'
 import './index.css';
-import ProgressBar from './components/ProgressBar'
-
-const defaultStyle = {
-  color: 'white',
-  fontFamily: '"lato", sans-serif',
-  fontWeight: 300,
-}
 
 const styles = {
   container: {
@@ -20,21 +13,18 @@ const styles = {
     fontWeight: '500',
     color: 'white',
   },
-  datePicker: {
+  appTitle: {
     width: 'fit-content',
+    margin: 'auto',
+    display: 'inline-block',
   },
   counter: {
-    ...defaultStyle,
     fontSize: '20vh',
     marginBottom: 0,
-    marginTop: '100px',
+    marginTop: '10%',
     transition: '0.8s ease-out',
     transitionProperty: 'background-color, color, opacity',
   },
-  dateText: {
-    width: 'fit-content',
-    color: 'white'
-  }
 }
 
 
@@ -74,20 +64,13 @@ class App extends React.Component {
     return (
       <MuiThemeProvider>
         <div style={styles.container}>
-          <h1 style={defaultStyle}>My coding log</h1>
+          <div style={styles.header}>
+            <h1 style={styles.appTitle}>My coding log</h1>
+            <SettingsComponent 
+              startingDate={this.state.startingDate}
+              handleChangeDate={this.handleChangeDate}/>
+          </div>
           <div>
-            <div>
-              <h4 style={{margin: '5vh 0px 0px 0px', ...defaultStyle}}>
-                Starting date
-              </h4>
-              <DatePicker
-                style={{display: 'inline-block'}}
-                textFieldStyle={styles.dateText}
-                id='start_date_picker'
-                defaultDate={this.state.startingDate}
-                onChange={this.handleChangeDate}
-              />
-            </div>
             <AnimatedNumber
               component="h1"
               value={this.state.daysCounter}
@@ -95,7 +78,7 @@ class App extends React.Component {
               duration={700}
               stepPrecision={0}
             />
-            <h3 style={defaultStyle}>days of coding everyday so far !</h3>
+            <h3>days of coding everyday so far !</h3>
             <ProgressBar counter={this.state.daysCounter} />
           </div>
       </div>
