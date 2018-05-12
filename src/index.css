@@ -13,6 +13,6 @@ body {
 input {
   /* color: white !important; */
   text-align: center;
-  width: fit-content;
+  width: fit-content !important;
   font-weight: 300;
 }

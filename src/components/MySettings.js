@@ -3,7 +3,8 @@ import Settings from 'material-ui/svg-icons/action/settings';
 import IconButton from 'material-ui/IconButton';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import DatePicker from 'material-ui/DatePicker'
+import DatePicker from 'material-ui/DatePicker';
+import TextField from 'material-ui/TextField';
 
 const styles = {
   datePicker: {
@@ -11,7 +12,8 @@ const styles = {
   },
   dateText: {
     width: 'fit-content',
-    color: 'black'
+    color: 'black',
+    maxWidth: '80%',
   },
   largeIcon: {
     width: 30,
@@ -30,6 +32,10 @@ const styles = {
     color:'black', 
     fontWeight: '400', 
     display: 'inline-block'
+  },
+  settingRow: {
+    display: 'flex',
+    alignItems: 'baseline',
   }
 }
 
@@ -83,14 +89,25 @@ export default class MySettings extends Component {
           open={this.state.open}
           style={{color:'black'}}
           >
-          <h4 style={styles.settingName}>Starting date : </h4>
-          <DatePicker
-            style={{display: 'inline-block'}}
-            textFieldStyle={styles.dateText}
-            id='start_date_picker'
-            defaultDate={this.props.startingDate}
-            onChange={this.props.handleChangeDate}
-          />
+          <div style={styles.settingRow}>
+            <h4 style={styles.settingName}>Starting date : </h4>
+            <DatePicker
+              style={{display: 'inline-block'}}
+              textFieldStyle={styles.dateText}
+              id='start_date_picker'
+              defaultDate={this.props.startingDate}
+              onChange={this.props.handleChangeDate}
+            />
+          </div>
+          <div style={styles.settingRow}>
+            <h4 style={styles.settingName}>Number of days to reach :</h4>
+            <TextField
+              style={{display: 'inline-block', width:'fit-content'}}
+              onChange={this.props.handleChangeGoal}
+              id="text-field-goal"
+              defaultValue={this.props.goal}
+            />
+          </div>    
         </Dialog>
       </React.Fragment>
     )

@@ -32,21 +32,18 @@ class App extends React.Component {
   constructor() {
     super();
     const savedStartingDate = localStorage.getItem('startingDate');
+    const savedGoal = localStorage.getItem('goal');
+    let goal;
     let startingDate;
-    if (savedStartingDate) {
-      startingDate = new Date(savedStartingDate);
-    } else {
-      startingDate = new Date();
-    }
+    startingDate = savedStartingDate ? new Date(savedStartingDate) : new Date();
+    goal = savedGoal ? savedGoal : 100;
     this.state = { 
       startingDate: startingDate,
       chosenStartingDate: startingDate,
+      goal: goal,
+      chosenGoal: goal,
     };
   };
-
-  componentWillMount() {
-    this.setState(prevState => ({ daysCounter: this.countDays(prevState.startingDate)}));
-  }
 
   countDays(date) {
     let count;
@@ -63,10 +60,19 @@ class App extends React.Component {
     localStorage.setItem('startingDate', date);
   }
 
-  handleSave = () => {
-    this.setState(prevState => ({startingDate: prevState.chosenStartingDate}));
+  handleChangeGoal = (event, value) => {
+    this.setState(() => ({
+      chosenGoal: value,
+    }));
+    localStorage.setItem('goal', value);
   }
 
+  handleSave = () => {
+    this.setState(prevState => ({
+      startingDate: prevState.chosenStartingDate,
+      goal: prevState.chosenGoal,
+    }));
+  }
 
   render() {
     const daysCount = this.countDays(this.state.startingDate);
@@ -77,7 +83,9 @@ class App extends React.Component {
             <h1 style={styles.appTitle}>My coding log</h1>
             <MySettings 
               startingDate={this.state.startingDate}
+              goal={this.state.goal}
               handleSave={this.handleSave}
+              handleChangeGoal={this.handleChangeGoal}
               handleChangeDate={this.handleChangeDate}/>
           </div>
           <div>
@@ -89,7 +97,7 @@ class App extends React.Component {
               stepPrecision={0}
             />
             <h3>days of coding everyday so far !</h3>
-            <ProgressBar counter={daysCount} />
+            <ProgressBar counter={Math.floor(daysCount/this.state.goal*100)} />
           </div>
       </div>
     </MuiThemeProvider>
