@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AnimatedNumber from 'react-animated-number';
 import ProgressBar from './components/ProgressBar';
-import MySettings from './components/MySettings';
+import Header from './components/Header';
 import './index.css';
+
 
 const styles = {
   container: {
@@ -25,6 +26,11 @@ const styles = {
     transition: '0.8s ease-out',
     transitionProperty: 'background-color, color, opacity',
   },
+  buttonsContainer: {
+    display: 'flex',
+    position: 'absolute',
+    right: '5%',
+  }
 }
 
 
@@ -42,6 +48,7 @@ class App extends React.Component {
       chosenStartingDate: startingDate,
       goal: goal,
       chosenGoal: goal,
+      isOnTimerMode: false,
     };
   };
 
@@ -74,20 +81,25 @@ class App extends React.Component {
     }));
   }
 
+  handleClickTimer = () => {
+    this.setState(prevState => ({
+      isOnTimerMode: !prevState.isOnTimerMode,
+    }))
+  }
+
   render() {
     const daysCount = this.countDays(this.state.startingDate);
     return (
       <MuiThemeProvider>
         <div style={styles.container}>
-          <div style={styles.header}>
-            <h1 style={styles.appTitle}>My coding log</h1>
-            <MySettings 
-              startingDate={this.state.startingDate}
-              goal={this.state.goal}
-              handleSave={this.handleSave}
-              handleChangeGoal={this.handleChangeGoal}
-              handleChangeDate={this.handleChangeDate}/>
-          </div>
+          <Header 
+          handleClickTimer={this.handleClickTimer} 
+          isOnTimerMode={this.state.isOnTimerMode}
+          startingDate={this.state.startingDate}
+          goal={this.state.goal}
+          handleSave={this.handleSave}
+          handleChangeGoal={this.handleChangeGoal}
+          handleChangeDate={this.handleChangeDate}/>
           <div>
             <AnimatedNumber
               component="h1"

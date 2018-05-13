@@ -23,9 +23,7 @@ const styles = {
     height: '70',
     width: '70',
     padding: '16',
-    position: 'absolute',
-    right: '5%',
-    display: 'inline-block',
+    // display: 'inline-block',
   },
   settingName: {
     margin: '5vh 0px 0px 0px', 
@@ -39,7 +37,7 @@ const styles = {
   }
 }
 
-export default class MySettings extends Component {
+class MySettings extends Component {
   // eslint-disable-next-line 
   state = {
     open: false,
@@ -113,3 +111,6 @@ export default class MySettings extends Component {
     )
   }
 }
+
+
+export default MySettings;
