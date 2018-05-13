@@ -38,6 +38,10 @@ class ProgressBar extends React.Component {
     this.timer = setTimeout(() => 
       this.progress(this.props.counter, this.props.counter)
     , 400);
+    //TODO: to change
+    if (nextProps.counter - this.props.counter < 0.01) {
+      return false;
+    }
     return true;
   }
 

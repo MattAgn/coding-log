@@ -17,46 +17,7 @@ const styles = {
 class TimerView extends Component {
   static propTypes = {
     timePerDay: PropTypes.number.isRequired,
-  }
-
-  state = {
-    currentTime: 0,
-    isPaused: true, 
-  }
-
-  componentDidMount() {
-    window.addEventListener('keypress', this.handlePauseTimer);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('keypress', this.handlePauseTimer);
-  }
-
-  // componentDidUpdate() {
-  //   console.log('to');
-  //   if (!this.state.isPaused) {
-  //     setInterval(this.handleRunClock, 1000);
-  //   }
-  // }
-
-  handlePauseTimer = (event) => {
-    if (event.keyCode === 32 || event.wich === 32) {
-      event.preventDefault();
-      this.setState(prevState => ({isPaused: !prevState.isPaused}));
-      const interval = setInterval(this.runClock, 1000);
-      if (this.state.isPaused) {
-        clearInterval(interval);
-      }
-    }
-  }
-
-  runClock = () => {
-    if (!this.state.isPaused) {
-      this.setState(prevState => ({
-        currentTime: prevState.currentTime + 1
-      }))
-
-    }
+    currentTime: PropTypes.number.isRequired,
   }
 
   timeToString(time) {
@@ -70,25 +31,24 @@ class TimerView extends Component {
       result[0] = Math.floor(time / 60); //min
       result[1] = time % 60; // seconds
     }
-    for (let item of result) {
-      console.log(item);
-      if (item < 10) {
-        item = "0" + item.toString();
+    const newList = [];
+    for (let i = 0; i < result.length; i++){
+      newList[i] = result[i].toString();
+      if (result[i] < 10) {
+        newList[i] = "0" + newList[i];
       }
     }
-    return result.join(":");
+    return newList.join(":");
   }
 
   
 
   render() {
-    const currentTime  = this.state.currentTime;
-    const timePerDay = this.props.timePerDay;
-
+    const {timePerDay, currentTime} = this.props;
     return (
       <div>
-        <h1 style={styles.counter}>{this.timeToString(this.state.currentTime)}</h1>
-        <h3>seconds passed</h3>
+        <h1 style={styles.counter}>{this.timeToString(currentTime)}</h1>
+        <h3>You're getting close !</h3>
         <ProgressBar counter={Math.floor((currentTime / timePerDay) * 100)} />
       </div>
     )

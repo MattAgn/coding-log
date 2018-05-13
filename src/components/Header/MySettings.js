@@ -63,7 +63,8 @@ class MySettings extends Component {
 
     return (
       <React.Fragment>
-        <IconButton 
+        <IconButton
+        disableKeyboardFocus 
         tooltip="settings" 
         onClick={this.handleOpen} 
         style={this.props.buttonStyle}

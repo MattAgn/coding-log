@@ -45,9 +45,24 @@ class App extends React.Component {
       chosenGoal: goal,
       timePerDay: timePerDay,
       chosenTimePerDay: timePerDay,
-      isOnTimerMode: false,
+      isOnClockMode: false,
+      isClockPaused: true,
+      currentTime: 0,
+      clock: null,
     };
   };
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (!nextState.isOnClockMode && !this.state.isOnClockMode) {
+      if (nextState.goal === this.state.goal ||
+          nextState.timePerDay === this.state.timePerDay ||
+          nextState.startingDate === this.state.startingDate ) {
+        
+        return false;
+      }
+    }
+    return true;
+  }
 
   countDays(date) {
     let count;
@@ -80,26 +95,59 @@ class App extends React.Component {
 
   handleClickTimer = () => {
     this.setState(prevState => ({
-      isOnTimerMode: !prevState.isOnTimerMode,
-    }))
+      isOnClockMode: !prevState.isOnClockMode,
+    }), function () {
+        if (this.state.isOnClockMode) {
+          window.addEventListener('keypress', this.handlePauseClock);
+        } else {
+          window.removeEventListener('keypress', this.handlePauseClock);
+        }
+      }
+    );
+  }
+
+  handlePauseClock = (event) => {
+    if (event.keyCode === 32 || event.wich === 32) {
+      let clock = this.state.clock;
+      if (!this.state.isClockPaused && clock) {
+        clearInterval(clock);
+        clock = null;
+      } else {
+        clock = setInterval(this.runClock, 1000);
+      }
+      this.setState(prevState => ({
+        isClockPaused: !prevState.isClockPaused,
+        clock: clock, 
+      }));
+    }
+  }
+
+  runClock = () => {
+    this.setState(prevState => ({
+      currentTime: prevState.currentTime + 1
+    }))   
   }
 
   render() {
     const daysCount = this.countDays(this.state.startingDate);
     return (
       <MuiThemeProvider>
-        <div style={styles.container} onKeyPress={this.handlePauseTimer}>
+        <div style={styles.container}>
           <Header 
           handleClickTimer={this.handleClickTimer} 
-          isOnTimerMode={this.state.isOnTimerMode}
+          isOnClockMode={this.state.isOnClockMode}
           startingDate={this.state.startingDate}
           goal={this.state.goal}
           handleSave={this.handleSave}
           handleChangeGoal={this.handleChangeGoal}
           handleChangeDate={this.handleChangeDate}/>
-          {this.state.isOnTimerMode ? 
-            <TimerView timePerDay={this.state.timePerDay} />
-          : <GlobalView goal={this.state.goal} daysCount={daysCount}/>
+          {this.state.isOnClockMode ? 
+            <TimerView 
+              timePerDay={this.state.timePerDay} 
+              currentTime={this.state.currentTime}/>
+          : <GlobalView 
+              goal={this.state.goal} 
+              daysCount={daysCount}/>
           }
       </div>
     </MuiThemeProvider>
