@@ -65,7 +65,7 @@ class MySettings extends Component {
       <React.Fragment>
         <IconButton
         disableKeyboardFocus 
-        tooltip="settings" 
+        tooltip="Settings" 
         onClick={this.handleOpen} 
         style={this.props.buttonStyle}
         iconStyle={this.props.iconStyle}>

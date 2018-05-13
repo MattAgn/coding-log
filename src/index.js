@@ -9,9 +9,10 @@ import './index.css';
 const styles = {
   container: {
     textAlign: 'center',
-    margin: '50px',
     fontWeight: '500',
     color: 'white',
+    width: '100%',
+    height: '100%',
   },
   appTitle: {
     width: 'fit-content',
@@ -37,7 +38,7 @@ class App extends React.Component {
     let timePerDay;
     startingDate = savedStartingDate ? new Date(savedStartingDate) : new Date();
     goal = savedGoal ? parseInt(savedGoal, 10) : 100;
-    timePerDay = savedTimePerDay ? parseInt(savedTimePerDay) : 3600;
+    timePerDay = savedTimePerDay ? parseInt(savedTimePerDay) : 360
     this.state = { 
       startingDate: startingDate,
       chosenStartingDate: startingDate,
@@ -49,6 +50,7 @@ class App extends React.Component {
       isClockPaused: true,
       currentTime: 0,
       clock: null,
+      flipping: "flipping",
     };
   };
 
@@ -96,12 +98,14 @@ class App extends React.Component {
   handleClickTimer = () => {
     this.setState(prevState => ({
       isOnClockMode: !prevState.isOnClockMode,
+      flipping: "flipping",
     }), function () {
         if (this.state.isOnClockMode) {
           window.addEventListener('keypress', this.handlePauseClock);
         } else {
           window.removeEventListener('keypress', this.handlePauseClock);
         }
+        this.setState({flipping: ''})
       }
     );
   }
@@ -132,7 +136,7 @@ class App extends React.Component {
     const daysCount = this.countDays(this.state.startingDate);
     return (
       <MuiThemeProvider>
-        <div style={styles.container}>
+        <div style={styles.container} id="container">
           <Header 
           handleClickTimer={this.handleClickTimer} 
           isOnClockMode={this.state.isOnClockMode}
@@ -141,14 +145,18 @@ class App extends React.Component {
           handleSave={this.handleSave}
           handleChangeGoal={this.handleChangeGoal}
           handleChangeDate={this.handleChangeDate}/>
-          {this.state.isOnClockMode ? 
-            <TimerView 
-              timePerDay={this.state.timePerDay} 
-              currentTime={this.state.currentTime}/>
-          : <GlobalView 
-              goal={this.state.goal} 
-              daysCount={daysCount}/>
-          }
+          <div className="flip-container">
+            <div className={`flipper ${this.state.flipping}`}> 
+              <TimerView 
+                isOnClockMode
+                timePerDay={this.state.timePerDay} 
+                currentTime={this.state.currentTime}/>
+              <GlobalView
+                isOnClockMode 
+                goal={this.state.goal} 
+                daysCount={daysCount}/>
+            </div>
+          </div>
       </div>
     </MuiThemeProvider>
     );

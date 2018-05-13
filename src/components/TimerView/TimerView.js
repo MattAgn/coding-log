@@ -7,7 +7,7 @@ const styles = {
   counter: {
     fontSize: '20vh',
     marginBottom: 0,
-    marginTop: '10%',
+    marginTop: '8%',
     transition: '0.8s ease-out',
     transitionProperty: 'background-color, color, opacity',
   },
@@ -18,6 +18,7 @@ class TimerView extends Component {
   static propTypes = {
     timePerDay: PropTypes.number.isRequired,
     currentTime: PropTypes.number.isRequired,
+    isOnClockMode: PropTypes.bool.isRequired,
   }
 
   timeToString(time) {
@@ -41,12 +42,12 @@ class TimerView extends Component {
     return newList.join(":");
   }
 
-  
+  //
 
   render() {
-    const {timePerDay, currentTime} = this.props;
+    const {timePerDay, currentTime, isOnClockMode} = this.props;
     return (
-      <div>
+      <div className={isOnClockMode ? "front" : "back"}>
         <h1 style={styles.counter}>{this.timeToString(currentTime)}</h1>
         <h3>You're getting close !</h3>
         <ProgressBar counter={Math.floor((currentTime / timePerDay) * 100)} />

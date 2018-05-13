@@ -7,14 +7,14 @@ const styles = {
   counter: {
     fontSize: '20vh',
     marginBottom: 0,
-    marginTop: '10%',
+    marginTop: '8%',
     transition: '0.8s ease-out',
     transitionProperty: 'background-color, color, opacity',
   },
 };
 
-const GlobalView = ({ daysCount, goal }) => (
-  <div>
+const GlobalView = ({ daysCount, goal, isOnClockMode }) => (
+  <div className={isOnClockMode ? 'back' : 'front'}>
     <AnimatedNumber
       component="h1"
       value={daysCount}
@@ -30,6 +30,7 @@ const GlobalView = ({ daysCount, goal }) => (
 GlobalView.propTypes = {
   daysCount: PropTypes.number.isRequired,
   goal: PropTypes.number.isRequired,
+  isOnClockMode: PropTypes.bool.isRequired,
 };
 
 export default GlobalView;

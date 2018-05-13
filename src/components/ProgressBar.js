@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 const styles = {
   bar: {
     height: '20px',
-    width: '50vw',
+    width: '74%',
     margin: '6% auto',
     borderRadius: '5px',
   },
@@ -36,12 +36,11 @@ class ProgressBar extends React.Component {
   shouldComponentUpdate(nextProps, prevState) {
     clearTimeout(this.timer);
     this.timer = setTimeout(() => 
-      this.progress(this.props.counter, this.props.counter)
+      this.progress(prevState.completed, nextProps.counter)
     , 400);
-    //TODO: to change
-    if (nextProps.counter - this.props.counter < 0.01) {
-      return false;
-    }
+    // if (prevState.completed === nextProps.counter) {
+    //   return false;
+    // }
     return true;
   }
 
@@ -54,8 +53,8 @@ class ProgressBar extends React.Component {
       this.setState({ completed: maxValue });
     } else {
       this.setState({ completed });
-      const diff = Math.random() * 10;
-      this.timer = setTimeout(() => this.progress(completed + diff, maxValue), 1000);
+      const diff = 1;
+      this.timer = setTimeout(() => this.progress(completed + diff, maxValue), 100);
     }
   }
 

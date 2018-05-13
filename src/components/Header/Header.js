@@ -13,6 +13,7 @@ const styles = {
     width: '100%',
     display: 'flex',
     flexWrap: 'wrap',
+    paddingTop: '3%',
   },
   icon: {
     width: 30,
@@ -39,7 +40,7 @@ const Header = ({
   handleChangeGoal,
   handleClickTimer,
   handleSave,
-  isOnTimerMode,
+  isOnClockMode,
   startingDate,
   goal,
 }) => (
@@ -48,7 +49,7 @@ const Header = ({
     <div style={styles.buttonsContainer}>
       <TimerButton
         handleClickTimer={handleClickTimer}
-        isOnTimerMode={isOnTimerMode}
+        isOnClockMode={isOnClockMode}
         iconStyle={styles.icon}
         buttonStyle={styles.button}
       />
@@ -70,7 +71,7 @@ Header.propTypes = {
   handleChangeGoal: PropTypes.func.isRequired,
   handleClickTimer: PropTypes.func.isRequired,
   handleSave: PropTypes.func.isRequired,
-  isOnTimerMode: PropTypes.bool.isRequired,
+  isOnClockMode: PropTypes.bool.isRequired,
   startingDate: PropTypes.instanceOf(Date).isRequired,
   goal: PropTypes.number.isRequired,
 };
