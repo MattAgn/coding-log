@@ -15,16 +15,6 @@ const styles = {
     color: 'black',
     maxWidth: '80%',
   },
-  largeIcon: {
-    width: 30,
-    height: 30,
-  },
-  settingsButton: {
-    height: '70',
-    width: '70',
-    padding: '16',
-    // display: 'inline-block',
-  },
   settingName: {
     margin: '5vh 0px 0px 0px', 
     color:'black', 
@@ -76,8 +66,8 @@ class MySettings extends Component {
         <IconButton 
         tooltip="settings" 
         onClick={this.handleOpen} 
-        style={styles.settingsButton}
-        iconStyle={styles.largeIcon}>
+        style={this.props.buttonStyle}
+        iconStyle={this.props.iconStyle}>
           <Settings color="#E0E0E0"/>
         </IconButton>
         <Dialog

@@ -4,36 +4,27 @@ import IconButton from 'material-ui/IconButton';
 import Alarm from 'material-ui/svg-icons/action/alarm';
 import Calendar from 'material-ui/svg-icons/action/event';
 
-const styles = {
-  button: {
-    height: '70',
-    width: '70',
-    padding: '16',
-    // display: 'inline-block',
-  },
-  largeIcon: {
-    width: 30,
-    height: 30,
-  },
-};
-
-const TimerButton = ({ handleClickTimer, isOnTimerMode }) => (
-  <div>
+const TimerButton = ({
+  handleClickTimer, isOnTimerMode, buttonStyle, iconStyle,
+}) => (
+  <React.Fragment>
     <IconButton
-      style={styles.button}
-      iconStyle={styles.largeIcon}
+      style={{ ...buttonStyle }}
+      iconStyle={iconStyle}
       onClick={handleClickTimer}
     >
       {!isOnTimerMode ?
         <Alarm color="#E0E0E0" />
       : <Calendar color="#E0E0E0" />}
     </IconButton>
-  </div>
+  </React.Fragment>
 );
 
 TimerButton.propTypes = {
   isOnTimerMode: PropTypes.bool.isRequired,
   handleClickTimer: PropTypes.func.isRequired,
+  buttonStyle: PropTypes.object.isRequired,
+  iconStyle: PropTypes.object.isRequired,
 };
 
 export default TimerButton;

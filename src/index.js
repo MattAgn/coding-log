@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AnimatedNumber from 'react-animated-number';
-import ProgressBar from './components/ProgressBar';
-import Header from './components/Header';
+import Header from './components/Header/Header';
+import GlobalView from './components/GlobalView/GlobalView';
+import TimerView from './components/TimerView/TimerView';
 import './index.css';
-
 
 const styles = {
   container: {
@@ -18,13 +17,6 @@ const styles = {
     width: 'fit-content',
     margin: 'auto',
     display: 'inline-block',
-  },
-  counter: {
-    fontSize: '20vh',
-    marginBottom: 0,
-    marginTop: '10%',
-    transition: '0.8s ease-out',
-    transitionProperty: 'background-color, color, opacity',
   },
   buttonsContainer: {
     display: 'flex',
@@ -39,15 +31,20 @@ class App extends React.Component {
     super();
     const savedStartingDate = localStorage.getItem('startingDate');
     const savedGoal = localStorage.getItem('goal');
+    const savedTimePerDay = localStorage.getItem('timePerDay');
     let goal;
     let startingDate;
+    let timePerDay;
     startingDate = savedStartingDate ? new Date(savedStartingDate) : new Date();
-    goal = savedGoal ? savedGoal : 100;
+    goal = savedGoal ? parseInt(savedGoal, 10) : 100;
+    timePerDay = savedTimePerDay ? parseInt(savedTimePerDay) : 3600;
     this.state = { 
       startingDate: startingDate,
       chosenStartingDate: startingDate,
       goal: goal,
       chosenGoal: goal,
+      timePerDay: timePerDay,
+      chosenTimePerDay: timePerDay,
       isOnTimerMode: false,
     };
   };
@@ -91,7 +88,7 @@ class App extends React.Component {
     const daysCount = this.countDays(this.state.startingDate);
     return (
       <MuiThemeProvider>
-        <div style={styles.container}>
+        <div style={styles.container} onKeyPress={this.handlePauseTimer}>
           <Header 
           handleClickTimer={this.handleClickTimer} 
           isOnTimerMode={this.state.isOnTimerMode}
@@ -100,17 +97,10 @@ class App extends React.Component {
           handleSave={this.handleSave}
           handleChangeGoal={this.handleChangeGoal}
           handleChangeDate={this.handleChangeDate}/>
-          <div>
-            <AnimatedNumber
-              component="h1"
-              value={daysCount}
-              style={styles.counter}
-              duration={700}
-              stepPrecision={0}
-            />
-            <h3>days of coding everyday so far !</h3>
-            <ProgressBar counter={Math.floor(daysCount/this.state.goal*100)} />
-          </div>
+          {this.state.isOnTimerMode ? 
+            <TimerView timePerDay={this.state.timePerDay} />
+          : <GlobalView goal={this.state.goal} daysCount={daysCount}/>
+          }
       </div>
     </MuiThemeProvider>
     );

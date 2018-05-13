@@ -11,8 +11,7 @@ const styles = {
   },
 };
 
-
-export default class LinearProgressExampleDeterminate extends React.Component {
+class ProgressBar extends React.Component {
   static propTypes = {
     counter: PropTypes.number.isRequired,
   }
@@ -65,3 +64,6 @@ export default class LinearProgressExampleDeterminate extends React.Component {
     );
   }
 }
+
+
+export default ProgressBar;
