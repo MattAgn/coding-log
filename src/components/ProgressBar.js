@@ -25,22 +25,17 @@ class ProgressBar extends React.Component {
 
   componentDidMount() {
     this.timer = setTimeout(() => 
-      this.progress(this.props.counter, this.props.counter)
-    , 400);
-  }
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    return {completed: 0}
+      this.progress(0, this.props.counter)
+    , 100);
   }
 
   shouldComponentUpdate(nextProps, prevState) {
-    clearTimeout(this.timer);
-    this.timer = setTimeout(() => 
-      this.progress(prevState.completed, nextProps.counter)
-    , 400);
-    // if (prevState.completed === nextProps.counter) {
-    //   return false;
-    // }
+    console.log(prevState.completed, nextProps.counter)
+    if (prevState.completed === nextProps.counter) {
+      return false;
+    } else if (nextProps.isOnClockMode) {
+      this.setState({completed: nextProps.counter})
+    } 
     return true;
   }
 
@@ -54,7 +49,7 @@ class ProgressBar extends React.Component {
     } else {
       this.setState({ completed });
       const diff = 1;
-      this.timer = setTimeout(() => this.progress(completed + diff, maxValue), 100);
+      this.timer = setTimeout(() => this.progress(completed + diff, maxValue), 500/maxValue);
     }
   }
 

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import AnimatedNumber from 'react-animated-number';
 import ProgressBar from '../ProgressBar';
 
 const styles = {
@@ -27,7 +26,6 @@ class TimerView extends Component {
     if (hours > 0) {
       result[0] = hours;
       result[1] = Math.floor(time / 60); //min
-      result[2] = time % 60; // seconds
     } else {
       result[0] = Math.floor(time / 60); //min
       result[1] = time % 60; // seconds
@@ -50,7 +48,9 @@ class TimerView extends Component {
       <div className={isOnClockMode ? "front" : "back"}>
         <h1 style={styles.counter}>{this.timeToString(currentTime)}</h1>
         <h3>You're getting close !</h3>
-        <ProgressBar counter={Math.floor((currentTime / timePerDay) * 100)} />
+        <ProgressBar 
+          isOnClockMode
+          counter={Math.floor((currentTime / timePerDay) * 100)} />
       </div>
     )
   }

@@ -19,6 +19,7 @@ const styles = {
     margin: '5vh 0px 0px 0px', 
     color:'black', 
     fontWeight: '400', 
+    marginRight: '3%',
     display: 'inline-block'
   },
   settingRow: {
@@ -95,6 +96,16 @@ class MySettings extends Component {
               onChange={this.props.handleChangeGoal}
               id="text-field-goal"
               defaultValue={this.props.goal}
+            />
+          </div>
+          <div style={styles.settingRow}>
+            <h4 style={styles.settingName}>Time per day :</h4>
+            <TextField
+              style={{display: 'inline-block', width:'fit-content'}}
+              onChange={this.props.handleChangeTimePerDay}
+              id="text-field-time_per_day"
+              hintText="(hh):mm"
+              hintStyle={{textAlign: "center", width:"100%"}}
             />
           </div>    
         </Dialog>

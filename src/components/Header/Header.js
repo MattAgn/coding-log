@@ -39,6 +39,7 @@ const Header = ({
   handleChangeDate,
   handleChangeGoal,
   handleClickTimer,
+  handleChangeTimePerDay,
   handleSave,
   isOnClockMode,
   startingDate,
@@ -59,6 +60,7 @@ const Header = ({
         handleSave={handleSave}
         handleChangeGoal={handleChangeGoal}
         handleChangeDate={handleChangeDate}
+        handleChangeTimePerDay={handleChangeTimePerDay}
         iconStyle={styles.icon}
         buttonStyle={styles.button}
       />
@@ -70,6 +72,7 @@ Header.propTypes = {
   handleChangeDate: PropTypes.func.isRequired,
   handleChangeGoal: PropTypes.func.isRequired,
   handleClickTimer: PropTypes.func.isRequired,
+  handleChangeTimePerDay: PropTypes.func.isRequired,
   handleSave: PropTypes.func.isRequired,
   isOnClockMode: PropTypes.bool.isRequired,
   startingDate: PropTypes.instanceOf(Date).isRequired,

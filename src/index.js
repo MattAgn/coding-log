@@ -38,7 +38,7 @@ class App extends React.Component {
     let timePerDay;
     startingDate = savedStartingDate ? new Date(savedStartingDate) : new Date();
     goal = savedGoal ? parseInt(savedGoal, 10) : 100;
-    timePerDay = savedTimePerDay ? parseInt(savedTimePerDay) : 360
+    timePerDay = savedTimePerDay ? parseInt(savedTimePerDay, 10) : 360
     this.state = { 
       startingDate: startingDate,
       chosenStartingDate: startingDate,
@@ -54,12 +54,15 @@ class App extends React.Component {
     };
   };
 
+  componentDidUpdate() {
+    console.log('update');
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     if (!nextState.isOnClockMode && !this.state.isOnClockMode) {
       if (nextState.goal === this.state.goal ||
           nextState.timePerDay === this.state.timePerDay ||
           nextState.startingDate === this.state.startingDate ) {
-        
         return false;
       }
     }
@@ -88,10 +91,23 @@ class App extends React.Component {
     localStorage.setItem('goal', value);
   }
 
+  handleChangeTimePerDay = (event, value) => {
+    const chosenTime = value.split(":").reverse().reduce((res,cur,index) => {
+      res += (cur * Math.pow(60, (index+1)));
+      return res; 
+    }, 0)
+    console.log(value, chosenTime);
+    this.setState(() => ({
+      chosenTimePerDay: chosenTime,
+    }));
+    localStorage.setItem('timePerDay', chosenTime);
+  }
+
   handleSave = () => {
     this.setState(prevState => ({
       startingDate: prevState.chosenStartingDate,
       goal: prevState.chosenGoal,
+      timePerDay: prevState.chosenTimePerDay,
     }));
   }
 
@@ -142,7 +158,9 @@ class App extends React.Component {
           isOnClockMode={this.state.isOnClockMode}
           startingDate={this.state.startingDate}
           goal={this.state.goal}
+          timePerDay={this.timePerDay}
           handleSave={this.handleSave}
+          handleChangeTimePerDay={this.handleChangeTimePerDay}
           handleChangeGoal={this.handleChangeGoal}
           handleChangeDate={this.handleChangeDate}/>
           <div className="flip-container">
