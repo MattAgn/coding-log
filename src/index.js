@@ -33,12 +33,15 @@ class App extends React.Component {
     const savedStartingDate = localStorage.getItem('startingDate');
     const savedGoal = localStorage.getItem('goal');
     const savedTimePerDay = localStorage.getItem('timePerDay');
+    const savedCompletedDays = localStorage.getItem('completedDays');
     let goal;
     let startingDate;
     let timePerDay;
+    let completedDays;
     startingDate = savedStartingDate ? new Date(savedStartingDate) : new Date();
     goal = savedGoal ? parseInt(savedGoal, 10) : 100;
-    timePerDay = savedTimePerDay ? parseInt(savedTimePerDay, 10) : 360
+    timePerDay = savedTimePerDay > 0 ? parseInt(savedTimePerDay, 10) : 360;
+    completedDays = savedCompletedDays ? parseInt(savedCompletedDays, 10) : 0;
     this.state = { 
       startingDate: startingDate,
       chosenStartingDate: startingDate,
@@ -46,6 +49,7 @@ class App extends React.Component {
       chosenGoal: goal,
       timePerDay: timePerDay,
       chosenTimePerDay: timePerDay,
+      completedDays: completedDays,
       isOnClockMode: false,
       isClockPaused: true,
       currentTime: 0,
@@ -86,9 +90,9 @@ class App extends React.Component {
 
   handleChangeGoal = (event, value) => {
     this.setState(() => ({
-      chosenGoal: value,
+      chosenGoal: parseInt(value, 10),
     }));
-    localStorage.setItem('goal', value);
+    localStorage.setItem('goal', parseInt(value,10));
   }
 
   handleChangeTimePerDay = (event, value) => {
@@ -96,11 +100,15 @@ class App extends React.Component {
       res += (cur * Math.pow(60, (index+1)));
       return res; 
     }, 0)
-    console.log(value, chosenTime);
-    this.setState(() => ({
-      chosenTimePerDay: chosenTime,
-    }));
-    localStorage.setItem('timePerDay', chosenTime);
+    if (parseInt(value, 10) < 0) {
+      alert('Aren\'t you lazy ? Please enter a time greater than 0');
+    } else {
+      this.setState(() => ({
+        chosenTimePerDay: chosenTime,
+      }));
+      localStorage.setItem('timePerDay', chosenTime);
+    }
+    
   }
 
   handleSave = () => {
@@ -161,11 +169,16 @@ class App extends React.Component {
   runClock = () => {
     this.setState(prevState => ({
       currentTime: prevState.currentTime + 1
-    }))   
+    }));
+    if (this.state.currentTime === this.state.timePerDay) {
+      this.setState(prevState => ({completedDays: prevState.completedDays + 1}),
+        () => {localStorage.setItem('completedDays', this.state.completedDays)});
+      alert('Congrats ! You\'ve completed yet another session !');   
+    }
   }
 
   render() {
-    const daysCount = this.countDays(this.state.startingDate);
+    //const daysCount = this.countDays(this.state.startingDate);
     return (
       <MuiThemeProvider>
         <div style={styles.container} id="container">
@@ -191,7 +204,7 @@ class App extends React.Component {
               <GlobalView
                 isOnClockMode 
                 goal={this.state.goal} 
-                daysCount={daysCount}/>
+                daysCount={this.state.completedDays}/>
             </div>
           </div>
       </div>

@@ -5,6 +5,7 @@ import PauseIcon from 'material-ui/svg-icons/av/pause';
 import ResetIcon from 'material-ui/svg-icons/av/replay';
 import IconButton from 'material-ui/IconButton/IconButton';
 import ProgressBar from '../ProgressBar';
+import encouragements from '../../assets/encouragements';
 import '../../index.css'; 
 
 const styles = {
@@ -21,7 +22,7 @@ const styles = {
   },
   icon: {
     width: '100%',
-    width: '100%',
+    height: '100%',
   }
 };
 
@@ -58,13 +59,14 @@ class TimerView extends Component {
 
   render() {
     const {timePerDay, currentTime, isOnClockMode, onClickPlay, onClickReset} = this.props;
+    const progress = Math.floor((currentTime / timePerDay) * 100);
     return (
       <div className={`${isOnClockMode ? "front" : "back"} timer-view`}>
         <h1 style={styles.counter}>{this.timeToString(currentTime)}</h1>
-        <h3>You're getting close !</h3>
+        <h3>{encouragements[Math.floor(progress / 10)]}</h3>
         <ProgressBar 
           isOnClockMode
-          counter={Math.floor((currentTime / timePerDay) * 100)} />
+          counter={progress} />
         <div className="playButtons">
           <IconButton 
             style={styles.buttons} 
