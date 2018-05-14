@@ -1,6 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import PlayArrowIcon from 'material-ui/svg-icons/av/play-arrow';
+import PauseIcon from 'material-ui/svg-icons/av/pause';
+import ResetIcon from 'material-ui/svg-icons/av/replay';
+import IconButton from 'material-ui/IconButton/IconButton';
 import ProgressBar from '../ProgressBar';
+import '../../index.css'; 
 
 const styles = {
   counter: {
@@ -10,6 +15,14 @@ const styles = {
     transition: '0.8s ease-out',
     transitionProperty: 'background-color, color, opacity',
   },
+  buttons: {
+    width: '30%',
+    height: '50%',
+  },
+  icon: {
+    width: '100%',
+    width: '100%',
+  }
 };
 
 
@@ -18,6 +31,7 @@ class TimerView extends Component {
     timePerDay: PropTypes.number.isRequired,
     currentTime: PropTypes.number.isRequired,
     isOnClockMode: PropTypes.bool.isRequired,
+    isClockPaused: PropTypes.bool.isRequired,
   }
 
   timeToString(time) {
@@ -43,14 +57,30 @@ class TimerView extends Component {
   //
 
   render() {
-    const {timePerDay, currentTime, isOnClockMode} = this.props;
+    const {timePerDay, currentTime, isOnClockMode, onClickPlay, onClickReset} = this.props;
     return (
-      <div className={isOnClockMode ? "front" : "back"}>
+      <div className={`${isOnClockMode ? "front" : "back"} timer-view`}>
         <h1 style={styles.counter}>{this.timeToString(currentTime)}</h1>
         <h3>You're getting close !</h3>
         <ProgressBar 
           isOnClockMode
           counter={Math.floor((currentTime / timePerDay) * 100)} />
+        <div className="playButtons">
+          <IconButton 
+            style={styles.buttons} 
+            iconStyle={styles.icon}
+            onClick={onClickPlay}>
+            { this.props.isClockPaused ? 
+              <PlayArrowIcon color="#E0E0E0"/>
+            : <PauseIcon color="#E0E0E0"/>}
+          </IconButton>
+          <IconButton 
+            style={styles.buttons}  
+            iconStyle={styles.icon}
+            onClick={onClickReset}>
+            <ResetIcon color="#E0E0E0"/>
+          </IconButton>
+        </div>
       </div>
     )
   }

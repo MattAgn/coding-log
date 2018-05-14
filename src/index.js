@@ -126,22 +126,38 @@ class App extends React.Component {
     );
   }
 
+  handlePlay = () => { this.pauseClock(); };  
+
+  handleReset = () => {
+    this.setState(() => ({
+      currentTime: 0,
+    }));
+    this.pauseClock(true);
+  }
+
   handlePauseClock = (event) => {
+    //TODO: change name
     if (event.keyCode === 32 || event.wich === 32) {
-      let clock = this.state.clock;
-      if (!this.state.isClockPaused && clock) {
-        clearInterval(clock);
-        clock = null;
-      } else {
-        clock = setInterval(this.runClock, 1000);
-      }
-      this.setState(prevState => ({
-        isClockPaused: !prevState.isClockPaused,
-        clock: clock, 
-      }));
+      this.pauseClock();
     }
   }
 
+  pauseClock = ( isPauseForced = false ) => {
+    let clock = this.state.clock;
+    if ((!this.state.isClockPaused || isPauseForced) && clock) {
+      clearInterval(clock);
+      clock = null;
+    } else if (isPauseForced) {
+      clock = null;
+    } else {
+      clock = setInterval(this.runClock, 1000);
+    }
+    this.setState(prevState => ({
+      isClockPaused: isPauseForced ? true : !prevState.isClockPaused,
+      clock: clock, 
+    }));
+  }
+  
   runClock = () => {
     this.setState(prevState => ({
       currentTime: prevState.currentTime + 1
@@ -167,6 +183,9 @@ class App extends React.Component {
             <div className={`flipper ${this.state.flipping}`}> 
               <TimerView 
                 isOnClockMode
+                onClickPlay={this.handlePlay}
+                onClickReset={this.handleReset}
+                isClockPaused={this.state.isClockPaused}
                 timePerDay={this.state.timePerDay} 
                 currentTime={this.state.currentTime}/>
               <GlobalView

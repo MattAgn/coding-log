@@ -30,7 +30,6 @@ class ProgressBar extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, prevState) {
-    console.log(prevState.completed, nextProps.counter)
     if (prevState.completed === nextProps.counter) {
       return false;
     } else if (nextProps.isOnClockMode) {
