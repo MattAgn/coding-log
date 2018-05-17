@@ -64,9 +64,10 @@ class App extends React.Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     if (!nextState.isOnClockMode && !this.state.isOnClockMode) {
-      if (nextState.goal === this.state.goal ||
+      if ((nextState.goal === this.state.goal ||
           nextState.timePerDay === this.state.timePerDay ||
-          nextState.startingDate === this.state.startingDate ) {
+          nextState.startingDate === this.state.startingDate )
+        && nextState.completedDays === this.state.completedDays) {
         return false;
       }
     }
@@ -79,6 +80,11 @@ class App extends React.Component {
     const div = 1000 * 60 * 60 * 24;
     count = Math.ceil((currentDate.getTime() - date.getTime()) / div) - 1;
     return count;
+  }
+
+  handleClickPlus = () => {
+    this.setState(prevState => ({completedDays: prevState.completedDays + 1}),
+    () => {localStorage.setItem('completedDays', this.state.completedDays)});
   }
 
   handleChangeDate = (event, date) => {
@@ -108,7 +114,6 @@ class App extends React.Component {
       }));
       localStorage.setItem('timePerDay', chosenTime);
     }
-    
   }
 
   handleSave = () => {
@@ -191,6 +196,7 @@ class App extends React.Component {
           handleSave={this.handleSave}
           handleChangeTimePerDay={this.handleChangeTimePerDay}
           handleChangeGoal={this.handleChangeGoal}
+          handleClickPlus={this.handleClickPlus}
           handleChangeDate={this.handleChangeDate}/>
           <div className="flip-container">
             <div className={`flipper ${this.state.flipping}`}> 
