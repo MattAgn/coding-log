@@ -82,6 +82,8 @@ class App extends React.Component {
     return count;
   }
 
+
+  //TODO: factoriser onClickButton methods
   handleClickPlus = () => {
     this.setState(prevState => ({completedDays: prevState.completedDays + 1}),
     () => {localStorage.setItem('completedDays', this.state.completedDays)});

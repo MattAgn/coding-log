@@ -70,7 +70,7 @@ input {
 	transform: rotateY(180deg);
 }
 
-.playButtons{
+/* .playButtons{
 	display: none;
 	visibility: hidden;
 	opacity: 0;
@@ -85,7 +85,7 @@ input {
 	visibility: visible;
 	display: flex;
 	opacity: 0.9;
-}
+} */
 
 .playButtons > button > div,
 .playButtons > button > div svg{

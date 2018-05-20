@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import PlayArrowIcon from 'material-ui/svg-icons/av/play-arrow';
-import PauseIcon from 'material-ui/svg-icons/av/pause';
-import ResetIcon from 'material-ui/svg-icons/av/replay';
-import IconButton from 'material-ui/IconButton/IconButton';
+import Radium from 'radium';
 import ProgressBar from '../ProgressBar';
 import encouragements from '../../assets/encouragements';
+import PlayButtons from './PlayButtons';
 import '../../index.css'; 
 
 const styles = {
@@ -13,8 +11,12 @@ const styles = {
     fontSize: '20vh',
     marginBottom: 0,
     marginTop: '8%',
-    transition: '0.8s ease-out',
+    transitionDuration: '0.8s',
+    transitionTimingFunction: 'ease-in-out',
     transitionProperty: 'background-color, color, opacity',
+    ':hover': {
+      color: 'blue',
+    }
   },
   buttons: {
     width: '30%',
@@ -23,6 +25,10 @@ const styles = {
   icon: {
     width: '100%',
     height: '100%',
+  },
+  container: {
+    ':hover': {
+    },
   }
 };
 
@@ -33,6 +39,29 @@ class TimerView extends Component {
     currentTime: PropTypes.number.isRequired,
     isOnClockMode: PropTypes.bool.isRequired,
     isClockPaused: PropTypes.bool.isRequired,
+  }
+
+  state = {
+    isHovered: false,
+  }
+
+  // shouldComponentUpdate(nextProps, nextState){
+  //   if (Radium.getState(this.state, "timerViewContainer", ':hover') !== Radium.getState(nextState, 'timerViewContainer', ':hover')) {
+  //     return true;
+  //   } else if (
+  //     nextProps.currentTime !== this.props.currentTime || 
+  //     nextProps.isOnClockMode !== this.props.isOnClockMode ||
+  //     nextProps.isClockPaused !== this.props.isClockPaused
+  //   ) {
+  //     return true
+  //   }
+  //   return false
+  // }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (Radium.getState(prevState, 'timerViewContainer', ':hover')) {
+      this.setState({isHovered: !prevState.isHovered})
+    }
   }
 
   timeToString(time) {
@@ -55,38 +84,29 @@ class TimerView extends Component {
     return newList.join(":");
   }
 
-  //
-
   render() {
-    const {timePerDay, currentTime, isOnClockMode, onClickPlay, onClickReset} = this.props;
+    const {timePerDay, currentTime, isOnClockMode, ...playButtonsProps} = this.props;
     const progress = Math.floor((currentTime / timePerDay) * 100);
+    const isHovered = Radium.getState(this.state, 'timerViewContainer',':hover');
+    console.log(isHovered);
     return (
-      <div className={`${isOnClockMode ? "front" : "back"} timer-view`}>
+      <div 
+        className={isOnClockMode ? "front" : "back"} 
+        key="timerViewContainer"     
+        style={styles.container}>
         <h1 style={styles.counter}>{this.timeToString(currentTime)}</h1>
         <h3>{encouragements[Math.floor(progress / 10)]}</h3>
         <ProgressBar 
           isOnClockMode
           counter={progress} />
-        <div className="playButtons">
-          <IconButton 
-            style={styles.buttons} 
-            iconStyle={styles.icon}
-            onClick={onClickPlay}>
-            { this.props.isClockPaused ? 
-              <PlayArrowIcon color="#E0E0E0"/>
-            : <PauseIcon color="#E0E0E0"/>}
-          </IconButton>
-          <IconButton 
-            style={styles.buttons}  
-            iconStyle={styles.icon}
-            onClick={onClickReset}>
-            <ResetIcon color="#E0E0E0"/>
-          </IconButton>
-        </div>
+        <PlayButtons 
+          isHovered={this.state.isHovered}
+          isClockPaused
+          {...playButtonsProps}/>
       </div>
     )
   }
 }
 
 
-export default TimerView;
+export default Radium(TimerView);

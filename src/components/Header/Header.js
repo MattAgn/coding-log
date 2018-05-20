@@ -38,15 +38,10 @@ const styles = {
 
 
 const Header = ({
-  handleChangeDate,
-  handleChangeGoal,
   handleClickTimer,
-  handleChangeTimePerDay,
-  handleSave,
   handleClickPlus,
   isOnClockMode,
-  startingDate,
-  goal,
+  ...settingsProps
 }) => (
   <div style={styles.header}>
     <h1 style={styles.appTitle}>My coding log</h1>
@@ -66,12 +61,7 @@ const Header = ({
         <PlusIcon color="#E0E0E0" />
       </IconButton>
       <MySettings
-        startingDate={startingDate}
-        goal={goal}
-        handleSave={handleSave}
-        handleChangeGoal={handleChangeGoal}
-        handleChangeDate={handleChangeDate}
-        handleChangeTimePerDay={handleChangeTimePerDay}
+        {...settingsProps}
         iconStyle={styles.icon}
         buttonStyle={styles.button}
       />
@@ -80,15 +70,9 @@ const Header = ({
 );
 
 Header.propTypes = {
-  handleChangeDate: PropTypes.func.isRequired,
-  handleChangeGoal: PropTypes.func.isRequired,
   handleClickTimer: PropTypes.func.isRequired,
-  handleChangeTimePerDay: PropTypes.func.isRequired,
-  handleSave: PropTypes.func.isRequired,
   handleClickPlus: PropTypes.func.isRequired,
   isOnClockMode: PropTypes.bool.isRequired,
-  startingDate: PropTypes.instanceOf(Date).isRequired,
-  goal: PropTypes.number.isRequired,
 };
 
 export default Header;
