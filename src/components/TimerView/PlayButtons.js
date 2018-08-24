@@ -8,7 +8,7 @@ import IconButton from 'material-ui/IconButton/IconButton';
 
 const styles = {
   playButtonsContainer: {
-    // display: 'none',
+    display: 'none',
     visibility: 'hidden',
     opacity: '0',
     backgroundColor: 'black',
@@ -16,20 +16,19 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     // transition: 'visibility 0ms, opacity 300ms ease-in-out',
-    zIndex: '3',
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
-    top: '0',
-    left: '0',
+    // width: '100%',
+    // height: '100%',
+    // position: 'absolute',
+    // top: '0',
+    // left: '0',
     transitionDuration: '300ms',
     transitionTimingFunction: 'ease-in-out',
     transitionProperty: '"opacity',
-    ':hover': {
-      visibility: 'visible',
-      display: 'flex',
-      opacity: '0.9',
-    },
+    // ':ho': {
+    //   visibility: 'visible',
+    //   display: 'flex',
+    //   opacity: '0.9',
+    // },
   },
   hovered: {
     visibility: 'visible',
@@ -41,10 +40,10 @@ const styles = {
 class PlayButtons extends Component {
   render() {
     return (
-      <div key="playButtonsKey" style={styles.playButtonsContainer}>
+      <div className="playButtons" style={[styles.playButtonsContainer, this.props.isHovered && styles.hovered]}>
         <IconButton
-          style={styles.buttons}
-          iconStyle={styles.icon}
+          style={this.props.styleButtons}
+          iconStyle={this.props.styleIcon}
           onClick={this.props.onClickPlay}
         >
           { this.props.isClockPaused ?
@@ -52,8 +51,8 @@ class PlayButtons extends Component {
           : <PauseIcon color="#E0E0E0" />}
         </IconButton>
         <IconButton
-          style={styles.buttons}
-          iconStyle={styles.icon}
+          style={this.props.styleButtons}
+          iconStyle={this.props.styleIcon}
           onClick={this.props.onClickReset}
         >
           <ResetIcon color="#E0E0E0" />

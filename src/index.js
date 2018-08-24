@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Radium from 'radium';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Header from './components/Header/Header';
 import GlobalView from './components/GlobalView/GlobalView';
@@ -23,6 +24,11 @@ const styles = {
     display: 'flex',
     position: 'absolute',
     right: '5%',
+  },
+  hoverContainer: {
+    ':hover': {
+      width: "70%",
+    }
   }
 }
 
@@ -70,8 +76,11 @@ class App extends React.Component {
         && nextState.completedDays === this.state.completedDays) {
         return false;
       }
+    } else {
+      console.log('Current state: ', Radium.getState(this.state, 'container', ':hover'));
+      console.log('Next state: ', Radium.getState(nextState, 'container', ':hover'));
+      return true
     }
-    return true;
   }
 
   countDays(date) {
@@ -200,10 +209,11 @@ class App extends React.Component {
           handleChangeGoal={this.handleChangeGoal}
           handleClickPlus={this.handleClickPlus}
           handleChangeDate={this.handleChangeDate}/>
-          <div className="flip-container">
+          <div className="flip-container" key='container' style={styles.hoverContainer}>
             <div className={`flipper ${this.state.flipping}`}> 
               <TimerView 
                 isOnClockMode
+                isHovered={Radium.getState(this.state, 'container', ':hover')}
                 onClickPlay={this.handlePlay}
                 onClickReset={this.handleReset}
                 isClockPaused={this.state.isClockPaused}
@@ -221,6 +231,6 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default Radium(App);
 
 ReactDOM.render(<App />, document.getElementById('root'));
