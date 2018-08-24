@@ -14,9 +14,10 @@ const styles = {
     transitionDuration: '0.8s',
     transitionTimingFunction: 'ease-in-out',
     transitionProperty: 'background-color, color, opacity',
-    ':hover': {
-      color: 'blue',
-    }
+    pointerEvents: 'none',
+    // ':hover': {
+    //   color: 'blue',
+    // }
   },
   buttons: {
     width: '30%',
@@ -41,10 +42,6 @@ class TimerView extends Component {
     isClockPaused: PropTypes.bool.isRequired,
   }
 
-  state = {
-    isHovered: false,
-  }
-
   // shouldComponentUpdate(nextProps, nextState){
   //   if (Radium.getState(this.state, "timerViewContainer", ':hover') !== Radium.getState(nextState, 'timerViewContainer', ':hover')) {
   //     return true;
@@ -58,11 +55,12 @@ class TimerView extends Component {
   //   return false
   // }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (Radium.getState(prevState, 'timerViewContainer', ':hover')) {
-      this.setState({isHovered: !prevState.isHovered})
-    }
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.log('Current state: ', Radium.getState(this.state, 'timerViewContainer', ':hover'));
+  //   console.log('Next state: ', Radium.getState(nextState, 'timerViewContainer', ':hover'));
+  
+  //   return (Radium.getState(nextState, 'timerViewContainer', ':hover') !== Radium.getState(this.state, 'timerViewContainer', ':hover'));
+  // }
 
   timeToString(time) {
     let result = [];
@@ -87,21 +85,22 @@ class TimerView extends Component {
   render() {
     const {timePerDay, currentTime, isOnClockMode, ...playButtonsProps} = this.props;
     const progress = Math.floor((currentTime / timePerDay) * 100);
-    const isHovered = Radium.getState(this.state, 'timerViewContainer',':hover');
-    console.log(isHovered);
+    // const isHovered = Radium.getState(this.state, 'timerViewContainer',':hover');
+    // console.log(isHovered);
     return (
       <div 
         className={isOnClockMode ? "front" : "back"} 
         key="timerViewContainer"     
         style={styles.container}>
-        <h1 style={styles.counter}>{this.timeToString(currentTime)}</h1>
+        <h1 style={styles.counter} key='titleKey'>{this.timeToString(currentTime)}</h1>
         <h3>{encouragements[Math.floor(progress / 10)]}</h3>
         <ProgressBar 
           isOnClockMode
           counter={progress} />
         <PlayButtons 
-          isHovered={this.state.isHovered}
           isClockPaused
+          styleButtons={styles.buttons}
+          styleIcons={styles.icon}
           {...playButtonsProps}/>
       </div>
     )
