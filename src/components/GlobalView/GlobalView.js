@@ -24,6 +24,7 @@ const GlobalView = ({ daysCount, goal, isOnClockMode }) => (
     />
     <h3>days of coding everyday so far !</h3>
     <p>Hey this is a test</p>
+    <h3>A secibd test</h3>
     <ProgressBar counter={Math.floor((daysCount / goal) * 100)} />
   </div>
 );
