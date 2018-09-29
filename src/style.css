@@ -1,94 +1,74 @@
-html, body, #root{
+html,
+body {
+  padding: 0;
   margin: 0;
-	padding: 0;
-	width: 100%;
-	height: 100%;
+  overflow: hidden;
 }
 
-h1, h3 {
-  font-family: "lato", sans-serif;
+h1 {
+  font-size: 5vmin;
+}
+
+h3 {
+  font-size: 3vmin;
+}
+
+h1,
+h3 {
+  font-family: 'lato', sans-serif;
   color: white;
   font-weight: 300;
 }
 
 body {
-	background-color: rgba(0,0,0,.8);
-	overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 input {
-  /* color: white !important; */
-  text-align: center;
-  width: fit-content !important;
   font-weight: 300;
 }
 
-
-
 .flip-container {
-	perspective: 1000px;
-	width: 55%;
-	height: 58%;
-	margin: auto;
-	margin-top: 7%; 
+  perspective: 1000px;
+  width: 55vw;
+  height: 58vh;
+  margin: auto;
 }
 
 /* flip the pane when hovered */
-.flipping{
-	transform: rotateY(180deg);
+.flipping {
+  transform: rotateY(180deg);
 }
 
 /* flip speed goes here */
 .flipper {
-	transition: 0.6s;
-	transform-style: preserve-3d;
-	position: relative;
-	width: 100%;
-	height: 100%;
-	box-shadow: 0 3px 10px rgba(0,0,0,.8), 0 3px 10px rgba(0,0,0,.8);
+  transition: 0.6s;
+  transform-style: preserve-3d;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.8), 0 3px 10px rgba(0, 0, 0, 0.8);
 }
 
 /* hide back of pane during swap */
-.front, .back, .playButtons {
-	backface-visibility: hidden;
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
+.front,
+.back {
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 /* front pane, placed above back */
 .front {
-	z-index: 2;
-	/* for firefox 31 */
-	transform: rotateY(0deg);
+  z-index: 2;
+  /* for firefox 31 */
+  transform: rotateY(0deg);
 }
 
 /* back, initially hidden pane */
 .back {
-	transform: rotateY(180deg);
-}
-
-/* .playButtons{
-	display: none;
-	visibility: hidden;
-	opacity: 0;
-	background-color: black;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	transition: visibility 0ms, opacity 300ms ease-in-out;
-}
-
-.timer-view:hover .playButtons {
-	visibility: visible;
-	display: flex;
-	opacity: 0.9;
-} */
-
-.playButtons > button > div,
-.playButtons > button > div svg{
-	width: 100% !important;
-	height: 100% !important;
+  transform: rotateY(180deg);
 }

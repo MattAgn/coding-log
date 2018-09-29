@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import IconButton from 'material-ui/IconButton';
 import PlusIcon from 'material-ui/svg-icons/content/add';
 
+import MyIconButton from '../common/MyIconButton';
 import MySettings from './MySettings';
 import TimerButton from './TimerButton';
 
@@ -18,22 +18,14 @@ const Header = ({
       <TimerButton
         handleClickTimer={handleClickTimer}
         isOnClockMode={isOnClockMode}
-        iconStyle={styles.icon}
-        buttonStyle={styles.button}
       />
-      <IconButton
-        onClick={handleClickPlus}
-        iconStyle={styles.icon}
-        style={styles.button}
+      <MyIconButton
+        handleClick={handleClickPlus}
         tooltip="Add a completed day manually"
       >
         <PlusIcon color="#E0E0E0" />
-      </IconButton>
-      <MySettings
-        {...settingsProps}
-        iconStyle={styles.icon}
-        buttonStyle={styles.button}
-      />
+      </MyIconButton>
+      <MySettings {...settingsProps} />
     </div>
   </div>
 );
@@ -46,31 +38,18 @@ Header.propTypes = {
 
 const styles = {
   appTitle: {
+    marginLeft: '2%',
     width: 'fit-content',
-    margin: 'auto',
     display: 'inline-block'
   },
   header: {
-    width: '100%',
     display: 'flex',
-    flexWrap: 'wrap'
-  },
-  icon: {
-    width: 30,
-    height: 30
-  },
-  button: {
-    height: '70',
-    width: '70',
-    padding: '16',
-    marginLeft: '10'
+    justifyContent: 'space-between',
+    flexDirection: 'column'
   },
   buttonsContainer: {
-    position: 'absolute',
-    right: '4%',
-    width: '7%',
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'center'
   }
 };
 

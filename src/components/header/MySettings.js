@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import Settings from 'material-ui/svg-icons/action/settings';
-import IconButton from 'material-ui/IconButton';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import DatePicker from 'material-ui/DatePicker';
 import TextField from 'material-ui/TextField';
+
+import MyIconButton from '../common/MyIconButton';
 
 class MySettings extends Component {
   state = {
@@ -37,15 +38,13 @@ class MySettings extends Component {
 
     return (
       <React.Fragment>
-        <IconButton
+        <MyIconButton
           disableKeyboardFocus
           tooltip="Settings"
-          onClick={this.handleOpen}
-          style={this.props.buttonStyle}
-          iconStyle={this.props.iconStyle}
+          handleClick={this.handleOpen}
         >
           <Settings color="#E0E0E0" />
-        </IconButton>
+        </MyIconButton>
         <Dialog
           title="Settings"
           actions={actions}
@@ -54,32 +53,22 @@ class MySettings extends Component {
           style={{ color: 'black' }}
         >
           <div style={styles.settingRow}>
-            <h4 style={styles.settingName}>Starting date : </h4>
-            <DatePicker
-              style={{ display: 'inline-block' }}
-              textFieldStyle={styles.dateText}
-              id="start_date_picker"
-              defaultDate={this.props.startingDate}
-              onChange={this.props.handleChangeDate}
-            />
-          </div>
-          <div style={styles.settingRow}>
-            <h4 style={styles.settingName}>Number of days to reach :</h4>
+            <h5 style={styles.settingName}>Number of days to reach :</h5>
             <TextField
-              style={{ display: 'inline-block', width: 'fit-content' }}
+              style={styles.textField}
               onChange={this.props.handleChangeGoal}
               id="text-field-goal"
               defaultValue={this.props.goal}
             />
           </div>
           <div style={styles.settingRow}>
-            <h4 style={styles.settingName}>Time per day :</h4>
+            <h5 style={styles.settingName}>Time per day :</h5>
             <TextField
-              style={{ display: 'inline-block', width: 'fit-content' }}
+              style={styles.textField}
               onChange={this.props.handleChangeTimePerDay}
               id="text-field-time_per_day"
               hintText="(hh):mm"
-              hintStyle={{ textAlign: 'center', width: '100%' }}
+              hintStyle={{ width: '100%' }}
             />
           </div>
         </Dialog>
@@ -100,13 +89,17 @@ const styles = {
   settingName: {
     margin: '5vh 0px 0px 0px',
     color: 'black',
-    fontWeight: '400',
+    fontWeight: '500',
     marginRight: '3%',
     display: 'inline-block'
   },
   settingRow: {
     display: 'flex',
+    flexDirection: 'column',
     alignItems: 'baseline'
+  },
+  textField: {
+    width: '80%'
   }
 };
 

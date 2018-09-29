@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AnimatedNumber from 'react-animated-number';
 
-import ProgressBar from '../common/ProgressBar';
+import ProgressBar from './ProgressBar';
 
 const GlobalView = ({ daysCount, goal, isOnClockMode }) => (
   <div className={isOnClockMode ? 'back' : 'front'}>
@@ -26,7 +26,7 @@ GlobalView.propTypes = {
 
 const styles = {
   counter: {
-    fontSize: '20vh',
+    fontSize: '20vmin',
     marginBottom: 0,
     marginTop: '8%',
     transition: '0.8s ease-out',

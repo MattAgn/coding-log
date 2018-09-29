@@ -4,7 +4,6 @@ import Radium from 'radium';
 import encouragements from '../../assets/encouragements';
 import '../../style.css';
 
-import ProgressBar from '../common/ProgressBar';
 import PlayButtons from './PlayButtons';
 
 class TimerView extends Component {
@@ -63,25 +62,17 @@ class TimerView extends Component {
       ...playButtonsProps
     } = this.props;
     const progress = Math.floor((currentTime / timePerDay) * 100);
-    // const isHovered = Radium.getState(this.state, 'timerViewContainer',':hover');
-    // console.log(isHovered);
+
     return (
       <div
         className={isOnClockMode ? 'front' : 'back'}
         key="timerViewContainer"
-        style={styles.container}
       >
         <h1 style={styles.counter} key="titleKey">
           {this.timeToString(currentTime)}
         </h1>
         <h3>{encouragements[Math.floor(progress / 10)]}</h3>
-        <ProgressBar isOnClockMode counter={progress} />
-        <PlayButtons
-          isClockPaused
-          styleButtons={styles.buttons}
-          styleIcons={styles.icon}
-          {...playButtonsProps}
-        />
+        <PlayButtons isClockPaused {...playButtonsProps} />
       </div>
     );
   }
@@ -89,27 +80,9 @@ class TimerView extends Component {
 
 const styles = {
   counter: {
-    fontSize: '20vh',
-    marginBottom: 0,
-    marginTop: '8%',
-    transitionDuration: '0.8s',
-    transitionTimingFunction: 'ease-in-out',
-    transitionProperty: 'background-color, color, opacity',
-    pointerEvents: 'none'
-    // ':hover': {
-    //   color: 'blue',
-    // }
-  },
-  buttons: {
-    width: '30%',
-    height: '50%'
-  },
-  icon: {
-    width: '100%',
-    height: '100%'
-  },
-  container: {
-    ':hover': {}
+    fontSize: '20vmin',
+    marginTop: '7%',
+    marginBottom: 0
   }
 };
 

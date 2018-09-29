@@ -206,11 +206,7 @@ class App extends React.Component {
             handleClickPlus={this.handleClickPlus}
             handleChangeDate={this.handleChangeDate}
           />
-          <div
-            className="flip-container"
-            key="container"
-            style={styles.hoverContainer}
-          >
+          <div className="flip-container" key="container">
             <div className={`flipper ${this.state.flipping}`}>
               <TimerView
                 isOnClockMode
@@ -239,9 +235,12 @@ const styles = {
     textAlign: 'center',
     fontWeight: '500',
     color: 'white',
-    width: '100%',
-    height: '100%',
-    padding: '3%'
+    margin: '1%',
+    width: '98%',
+    height: '94vh', // issue 100vh taking more than whole screen
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between'
   },
   appTitle: {
     width: 'fit-content',
@@ -249,9 +248,7 @@ const styles = {
     display: 'inline-block'
   },
   buttonsContainer: {
-    display: 'flex',
-    position: 'absolute',
-    right: '5%'
+    display: 'flex'
   },
   hoverContainer: {
     ':hover': {
