@@ -1,9 +1,12 @@
 {
-    "extends": "airbnb",
-    "rules": {
-        "react/jsx-filename-extension": "off",
-        "react/forbid-prop-types": "off",
-        "no-underscore-dangle": "off",
-        "no-plusplus": "off"
-    }
+  "extends": ["airbnb", "prettier"],
+  "rules": {
+    "react/jsx-filename-extension": "off",
+    "react/forbid-prop-types": "off",
+    "no-underscore-dangle": "off",
+    "no-plusplus": "off",
+    "arrow-parens": ["warn", "as-needed"],
+    "prefer-arrow-callback": ["warn", { "allowNamedFunctions": false }],
+    "semi": ["warning", "always", { "omitLastInOneLineBlock": true }]
+  }
 }

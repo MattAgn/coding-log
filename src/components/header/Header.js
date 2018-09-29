@@ -1,41 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import IconButton from 'material-ui/IconButton/IconButton';
+import IconButton from 'material-ui/IconButton';
 import PlusIcon from 'material-ui/svg-icons/content/add';
+
 import MySettings from './MySettings';
 import TimerButton from './TimerButton';
-
-const styles = {
-  appTitle: {
-    width: 'fit-content',
-    margin: 'auto',
-    display: 'inline-block',
-  },
-  header: {
-    width: '100%',
-    display: 'flex',
-    flexWrap: 'wrap',
-    paddingTop: '3%',
-  },
-  icon: {
-    width: 30,
-    height: 30,
-  },
-  button: {
-    height: '70',
-    width: '70',
-    padding: '16',
-    marginLeft: '10',
-  },
-  buttonsContainer: {
-    position: 'absolute',
-    right: '4%',
-    width: '7%',
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
-};
-
 
 const Header = ({
   handleClickTimer,
@@ -72,8 +41,37 @@ const Header = ({
 Header.propTypes = {
   handleClickTimer: PropTypes.func.isRequired,
   handleClickPlus: PropTypes.func.isRequired,
-  isOnClockMode: PropTypes.bool.isRequired,
+  isOnClockMode: PropTypes.bool.isRequired
+};
+
+const styles = {
+  appTitle: {
+    width: 'fit-content',
+    margin: 'auto',
+    display: 'inline-block'
+  },
+  header: {
+    width: '100%',
+    display: 'flex',
+    flexWrap: 'wrap'
+  },
+  icon: {
+    width: 30,
+    height: 30
+  },
+  button: {
+    height: '70',
+    width: '70',
+    padding: '16',
+    marginLeft: '10'
+  },
+  buttonsContainer: {
+    position: 'absolute',
+    right: '4%',
+    width: '7%',
+    display: 'flex',
+    justifyContent: 'space-between'
+  }
 };
 
 export default Header;
-

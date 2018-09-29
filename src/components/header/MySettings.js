@@ -6,85 +6,59 @@ import FlatButton from 'material-ui/FlatButton';
 import DatePicker from 'material-ui/DatePicker';
 import TextField from 'material-ui/TextField';
 
-const styles = {
-  datePicker: {
-    width: 'fit-content',
-  },
-  dateText: {
-    width: 'fit-content',
-    color: 'black',
-    maxWidth: '80%',
-  },
-  settingName: {
-    margin: '5vh 0px 0px 0px', 
-    color:'black', 
-    fontWeight: '400', 
-    marginRight: '3%',
-    display: 'inline-block'
-  },
-  settingRow: {
-    display: 'flex',
-    alignItems: 'baseline',
-  }
-}
-
 class MySettings extends Component {
-  // eslint-disable-next-line 
   state = {
-    open: false,
+    open: false
   };
 
   handleOpen = () => {
-    this.setState({open: true});
+    this.setState({ open: true });
   };
 
   handleClose = () => {
-    this.setState({open: false});
+    this.setState({ open: false });
   };
 
   handleSave = () => {
     this.props.handleSave();
     this.handleClose();
-  }
+  };
 
   render() {
     const actions = [
-      <FlatButton
-        label="Cancel"
-        primary={true}
-        onClick={this.handleClose}
-      />,
+      <FlatButton label="Cancel" primary={true} onClick={this.handleClose} />,
       <FlatButton
         label="Save"
         primary={true}
         keyboardFocused={true}
         onClick={this.handleSave}
-      />,
+      />
     ];
 
     return (
       <React.Fragment>
         <IconButton
-        disableKeyboardFocus 
-        tooltip="Settings" 
-        onClick={this.handleOpen} 
-        style={this.props.buttonStyle}
-        iconStyle={this.props.iconStyle}>
-          <Settings color="#E0E0E0"/>
+          disableKeyboardFocus
+          tooltip="Settings"
+          onClick={this.handleOpen}
+          style={this.props.buttonStyle}
+          iconStyle={this.props.iconStyle}
+        >
+          <Settings color="#E0E0E0" />
         </IconButton>
         <Dialog
           title="Settings"
           actions={actions}
           modal={true}
           open={this.state.open}
-          style={{color:'black'}}
-          >
+          style={{ color: 'black' }}
+        >
           <div style={styles.settingRow}>
             <h4 style={styles.settingName}>Starting date : </h4>
             <DatePicker
-              style={{display: 'inline-block'}}
+              style={{ display: 'inline-block' }}
               textFieldStyle={styles.dateText}
-              id='start_date_picker'
+              id="start_date_picker"
               defaultDate={this.props.startingDate}
               onChange={this.props.handleChangeDate}
             />
@@ -92,7 +66,7 @@ class MySettings extends Component {
           <div style={styles.settingRow}>
             <h4 style={styles.settingName}>Number of days to reach :</h4>
             <TextField
-              style={{display: 'inline-block', width:'fit-content'}}
+              style={{ display: 'inline-block', width: 'fit-content' }}
               onChange={this.props.handleChangeGoal}
               id="text-field-goal"
               defaultValue={this.props.goal}
@@ -101,18 +75,39 @@ class MySettings extends Component {
           <div style={styles.settingRow}>
             <h4 style={styles.settingName}>Time per day :</h4>
             <TextField
-              style={{display: 'inline-block', width:'fit-content'}}
+              style={{ display: 'inline-block', width: 'fit-content' }}
               onChange={this.props.handleChangeTimePerDay}
               id="text-field-time_per_day"
               hintText="(hh):mm"
-              hintStyle={{textAlign: "center", width:"100%"}}
+              hintStyle={{ textAlign: 'center', width: '100%' }}
             />
-          </div>    
+          </div>
         </Dialog>
       </React.Fragment>
-    )
+    );
   }
 }
 
+const styles = {
+  datePicker: {
+    width: 'fit-content'
+  },
+  dateText: {
+    width: 'fit-content',
+    color: 'black',
+    maxWidth: '80%'
+  },
+  settingName: {
+    margin: '5vh 0px 0px 0px',
+    color: 'black',
+    fontWeight: '400',
+    marginRight: '3%',
+    display: 'inline-block'
+  },
+  settingRow: {
+    display: 'flex',
+    alignItems: 'baseline'
+  }
+};
 
 export default MySettings;
