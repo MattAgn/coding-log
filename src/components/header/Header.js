@@ -38,7 +38,7 @@ Header.propTypes = {
 
 const styles = {
   appTitle: {
-    marginLeft: '2%',
+    margin: '1% auto',
     width: 'fit-content',
     display: 'inline-block'
   },

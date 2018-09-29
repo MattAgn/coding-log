@@ -29,9 +29,7 @@ const TimerButton = ({ handleClickTimer, isOnClockMode, iconStyle }) => (
 
 TimerButton.propTypes = {
   isOnClockMode: PropTypes.bool.isRequired,
-  handleClickTimer: PropTypes.func.isRequired,
-  buttonStyle: PropTypes.object.isRequired,
-  iconStyle: PropTypes.object.isRequired
+  handleClickTimer: PropTypes.func.isRequired
 };
 
 export default TimerButton;

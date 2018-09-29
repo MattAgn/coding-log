@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Settings from 'material-ui/svg-icons/action/settings';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import DatePicker from 'material-ui/DatePicker';
 import TextField from 'material-ui/TextField';
 
 import MyIconButton from '../common/MyIconButton';
