@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import IconButton from 'material-ui/IconButton';
-import Alarm from 'material-ui/svg-icons/action/alarm';
-import Calendar from 'material-ui/svg-icons/action/event';
+import AlarmIcon from 'material-ui/svg-icons/action/alarm';
+import HomeIcon from 'material-ui/svg-icons/action/home';
 
 function loseFocus(event) {
   event.preventDefault();
@@ -10,7 +10,10 @@ function loseFocus(event) {
 }
 
 const TimerButton = ({
-  handleClickTimer, isOnClockMode, buttonStyle, iconStyle,
+  handleClickTimer,
+  isOnClockMode,
+  buttonStyle,
+  iconStyle
 }) => (
   <React.Fragment>
     <IconButton
@@ -21,19 +24,20 @@ const TimerButton = ({
       onClick={handleClickTimer}
       tooltip={!isOnClockMode ? 'Start now!' : 'See progress'}
     >
-      {!isOnClockMode ?
-        <Alarm color="#E0E0E0" />
-      : <Calendar color="#E0E0E0" />}
+      {!isOnClockMode ? (
+        <AlarmIcon color="#E0E0E0" />
+      ) : (
+        <HomeIcon color="#E0E0E0" />
+      )}
     </IconButton>
   </React.Fragment>
 );
-
 
 TimerButton.propTypes = {
   isOnClockMode: PropTypes.bool.isRequired,
   handleClickTimer: PropTypes.func.isRequired,
   buttonStyle: PropTypes.object.isRequired,
-  iconStyle: PropTypes.object.isRequired,
+  iconStyle: PropTypes.object.isRequired
 };
 
 export default TimerButton;
