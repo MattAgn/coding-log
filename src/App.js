@@ -10,71 +10,43 @@ import TimerView from './components/timerView/TimerView';
 class App extends React.Component {
   constructor() {
     super();
-    const savedStartingDate = localStorage.getItem('startingDate');
     const savedGoal = localStorage.getItem('goal');
     const savedTimePerDay = localStorage.getItem('timePerDay');
     const savedCompletedDays = localStorage.getItem('completedDays');
     let goal;
-    let startingDate;
     let timePerDay;
     let completedDays;
-    startingDate = savedStartingDate ? new Date(savedStartingDate) : new Date();
     goal = savedGoal ? parseInt(savedGoal, 10) : 100;
     timePerDay = savedTimePerDay > 0 ? parseInt(savedTimePerDay, 10) : 360;
     completedDays = savedCompletedDays ? parseInt(savedCompletedDays, 10) : 0;
     this.state = {
-      startingDate: startingDate,
-      chosenStartingDate: startingDate,
       goal: goal,
-      chosenGoal: goal,
       timePerDay: timePerDay,
-      chosenTimePerDay: timePerDay,
       completedDays: completedDays,
       isOnClockMode: false,
       isClockPaused: true,
       currentTime: 0,
-      clock: null,
-      flipping: 'flipping'
+      clock: null
     };
   }
 
-  componentDidUpdate() {
-    console.log('update');
-  }
-
   shouldComponentUpdate(nextProps, nextState) {
-    if (!nextState.isOnClockMode && !this.state.isOnClockMode) {
-      if (
-        (nextState.goal === this.state.goal ||
-          nextState.timePerDay === this.state.timePerDay ||
-          nextState.startingDate === this.state.startingDate) &&
-        nextState.completedDays === this.state.completedDays
-      ) {
-        return false;
-      }
-    } else {
-      console.log(
-        'Current state: ',
-        Radium.getState(this.state, 'container', ':hover')
-      );
-      console.log(
-        'Next state: ',
-        Radium.getState(nextState, 'container', ':hover')
-      );
-      return true;
-    }
+    // if (!nextState.isOnClockMode && !this.state.isOnClockMode) {
+    //   if (
+    //     (nextState.goal === this.state.goal ||
+    //       nextState.timePerDay === this.state.timePerDay ||
+    //       nextState.startingDate === this.state.startingDate) &&
+    //     nextState.completedDays === this.state.completedDays
+    //   ) {
+    //     console.log('wont update');
+    //     return false;
+    //   }
+    // }
+    console.log('will update');
+    return true;
   }
 
-  countDays(date) {
-    let count;
-    const currentDate = new Date();
-    const div = 1000 * 60 * 60 * 24;
-    count = Math.ceil((currentDate.getTime() - date.getTime()) / div) - 1;
-    return count;
-  }
-
-  //TODO: factoriser onClickButton methods
-  handleClickPlus = () => {
+  handleClickAddDay = () => {
     this.setState(
       prevState => ({ completedDays: prevState.completedDays + 1 }),
       () => {
@@ -83,79 +55,38 @@ class App extends React.Component {
     );
   };
 
-  handleChangeDate = (event, date) => {
-    this.setState(() => ({
-      chosenStartingDate: date
-    }));
-    localStorage.setItem('startingDate', date);
-  };
-
-  handleChangeGoal = (event, value) => {
-    this.setState(() => ({
-      chosenGoal: parseInt(value, 10)
-    }));
-    localStorage.setItem('goal', parseInt(value, 10));
-  };
-
-  handleChangeTimePerDay = (event, value) => {
-    const chosenTime = value
-      .split(':')
-      .reverse()
-      .reduce((res, cur, index) => {
-        res += cur * Math.pow(60, index + 1);
-        return res;
-      }, 0);
-    if (parseInt(value, 10) < 0) {
-      alert("Aren't you lazy ? Please enter a time greater than 0");
-    } else {
-      this.setState(() => ({
-        chosenTimePerDay: chosenTime
-      }));
-      localStorage.setItem('timePerDay', chosenTime);
-    }
-  };
-
-  handleSave = () => {
-    this.setState(prevState => ({
-      startingDate: prevState.chosenStartingDate,
-      goal: prevState.chosenGoal,
-      timePerDay: prevState.chosenTimePerDay
-    }));
-  };
-
-  handleClickTimer = () => {
+  handleClickSave = ({ inputTimePerDay, inputGoal }) => {
+    console.log(inputGoal);
     this.setState(
-      prevState => ({
-        isOnClockMode: !prevState.isOnClockMode,
-        flipping: 'flipping'
+      () => ({
+        goal: inputGoal,
+        timePerDay: inputTimePerDay
       }),
-      function() {
-        if (this.state.isOnClockMode) {
-          window.addEventListener('keypress', this.handlePauseClock);
-        } else {
-          window.removeEventListener('keypress', this.handlePauseClock);
-        }
-        this.setState({ flipping: '' });
-      }
+      this.saveToLocalStorage
     );
   };
 
-  handlePlay = () => {
+  saveToLocalStorage = () => {
+    console.log('saved to local storage');
+    localStorage.setItem('timePerDay', this.state.timePerDay);
+    localStorage.setItem('goal', this.state.goal);
+  };
+
+  handleClickTimer = () => {
+    this.setState(prevState => ({
+      isOnClockMode: !prevState.isOnClockMode
+    }));
+  };
+
+  handleClickPlay = () => {
     this.pauseClock();
   };
 
-  handleReset = () => {
+  handleClickReset = () => {
     this.setState(() => ({
       currentTime: 0
     }));
     this.pauseClock(true);
-  };
-
-  handlePauseClock = event => {
-    //TODO: change name
-    if (event.keyCode === 32 || event.wich === 32) {
-      this.pauseClock();
-    }
   };
 
   pauseClock = (isPauseForced = false) => {
@@ -190,29 +121,25 @@ class App extends React.Component {
   };
 
   render() {
-    //const daysCount = this.countDays(this.state.startingDate);
     return (
       <MuiThemeProvider>
         <div style={styles.container} id="container">
           <Header
-            handleClickTimer={this.handleClickTimer}
             isOnClockMode={this.state.isOnClockMode}
-            startingDate={this.state.startingDate}
             goal={this.state.goal}
-            timePerDay={this.timePerDay}
-            handleSave={this.handleSave}
-            handleChangeTimePerDay={this.handleChangeTimePerDay}
-            handleChangeGoal={this.handleChangeGoal}
-            handleClickPlus={this.handleClickPlus}
-            handleChangeDate={this.handleChangeDate}
+            timePerDay={this.state.timePerDay}
+            handleClickTimer={this.handleClickTimer}
+            handleClickSave={this.handleClickSave}
+            handleClickAddDay={this.handleClickAddDay}
           />
           <div className="flip-container" key="container">
-            <div className={`flipper ${this.state.flipping}`}>
+            <div
+              className={`flipper ${!this.state.isOnClockMode && 'flipping'}`}
+            >
               <TimerView
                 isOnClockMode
-                isHovered={Radium.getState(this.state, 'container', ':hover')}
-                onClickPlay={this.handlePlay}
-                onClickReset={this.handleReset}
+                onClickPlay={this.handleClickPlay}
+                onClickReset={this.handleClickReset}
                 isClockPaused={this.state.isClockPaused}
                 timePerDay={this.state.timePerDay}
                 currentTime={this.state.currentTime}
@@ -249,11 +176,6 @@ const styles = {
   },
   buttonsContainer: {
     display: 'flex'
-  },
-  hoverContainer: {
-    ':hover': {
-      width: '70%'
-    }
   }
 };
 

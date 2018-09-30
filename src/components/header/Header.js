@@ -8,7 +8,7 @@ import TimerButton from './TimerButton';
 
 const Header = ({
   handleClickTimer,
-  handleClickPlus,
+  handleClickAddDay,
   isOnClockMode,
   ...settingsProps
 }) => (
@@ -20,7 +20,7 @@ const Header = ({
         isOnClockMode={isOnClockMode}
       />
       <MyIconButton
-        handleClick={handleClickPlus}
+        handleClick={handleClickAddDay}
         tooltip="Add a completed day manually"
       >
         <PlusIcon color="#E0E0E0" />
@@ -32,12 +32,13 @@ const Header = ({
 
 Header.propTypes = {
   handleClickTimer: PropTypes.func.isRequired,
-  handleClickPlus: PropTypes.func.isRequired,
+  handleClickAddDay: PropTypes.func.isRequired,
   isOnClockMode: PropTypes.bool.isRequired
 };
 
 const styles = {
   appTitle: {
+    fontSize: '5vmin',
     margin: '1% auto',
     width: 'fit-content',
     display: 'inline-block'

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Settings from 'material-ui/svg-icons/action/settings';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
@@ -7,8 +8,42 @@ import TextField from 'material-ui/TextField';
 import MyIconButton from '../common/MyIconButton';
 
 class MySettings extends Component {
+  static propTypes = {
+    handleClickSave: PropTypes.func.isRequired,
+    goal: PropTypes.number.isRequired,
+    timePerDay: PropTypes.number.isRequired
+  };
+
   state = {
-    open: false
+    open: false,
+    inputTimePerDay: this.props.timePerDay,
+    inputGoal: this.props.goal
+  };
+
+  handleChangeGoal = event => {
+    const value = event.target.value;
+    this.setState(() => ({
+      inputGoal: parseInt(value, 10)
+    }));
+    console.log(value);
+  };
+
+  handleChangeTimePerDay = event => {
+    const value = event.target.value;
+    const chosenTime = value
+      .split(':')
+      .reverse()
+      .reduce((res, cur, index) => {
+        res += cur * Math.pow(60, index + 1);
+        return res;
+      }, 0);
+    if (parseInt(value, 10) < 0) {
+      alert("Aren't you lazy ? Please enter a time greater than 0");
+    } else {
+      this.setState(() => ({
+        inputTimePerDay: chosenTime
+      }));
+    }
   };
 
   handleOpen = () => {
@@ -19,8 +54,9 @@ class MySettings extends Component {
     this.setState({ open: false });
   };
 
-  handleSave = () => {
-    this.props.handleSave();
+  handleClickSave = () => {
+    const { inputGoal, inputTimePerDay } = this.state;
+    this.props.handleClickSave({ inputGoal, inputTimePerDay });
     this.handleClose();
   };
 
@@ -31,7 +67,7 @@ class MySettings extends Component {
         label="Save"
         primary={true}
         keyboardFocused={true}
-        onClick={this.handleSave}
+        onClick={this.handleClickSave}
       />
     ];
 
@@ -51,23 +87,27 @@ class MySettings extends Component {
           open={this.state.open}
           style={{ color: 'black' }}
         >
+          <h5 style={styles.text}>
+            Inital rules of the 100 days of code challenge: code everyday for 1
+            hour for a 100 days straight! But feel free to set your own
+            objectives that corresponds you best.
+          </h5>
           <div style={styles.settingRow}>
-            <h5 style={styles.settingName}>Number of days to reach :</h5>
+            <h5 style={styles.text}>Number of days to reach :</h5>
             <TextField
               style={styles.textField}
-              onChange={this.props.handleChangeGoal}
-              id="text-field-goal"
+              onChange={this.handleChangeGoal}
               defaultValue={this.props.goal}
+              id="input_goal"
             />
           </div>
           <div style={styles.settingRow}>
-            <h5 style={styles.settingName}>Time per day :</h5>
+            <h5 style={styles.text}>Time per day :</h5>
             <TextField
               style={styles.textField}
-              onChange={this.props.handleChangeTimePerDay}
-              id="text-field-time_per_day"
+              onChange={this.handleChangeTimePerDay}
               hintText="(hh):mm"
-              hintStyle={{ width: '100%' }}
+              id="input_time_per_day"
             />
           </div>
         </Dialog>
@@ -85,7 +125,7 @@ const styles = {
     color: 'black',
     maxWidth: '80%'
   },
-  settingName: {
+  text: {
     margin: '5vh 0px 0px 0px',
     color: 'black',
     fontWeight: '500',

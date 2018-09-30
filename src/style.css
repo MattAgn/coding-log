@@ -5,12 +5,8 @@ body {
   overflow: hidden;
 }
 
-h1 {
-  font-size: 5vmin;
-}
-
-h3 {
-  font-size: 3vmin;
+body {
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 h1,
@@ -20,13 +16,11 @@ h3 {
   font-weight: 300;
 }
 
-body {
-  background-color: rgba(0, 0, 0, 0.8);
+h3 {
+  font-size: 3vmin;
 }
 
-input {
-  font-weight: 300;
-}
+/* STYLE TO FLIP THE CARD */
 
 .flip-container {
   perspective: 1000px;
