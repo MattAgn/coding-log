@@ -5,10 +5,10 @@ const encouragements = [
   'No pain, no gain !',
   'No pain, no light novel !',
   'Halfway through already !',
-  'You\'re doing great !',
+  "You're doing great !",
   'You can read a new chapter very soon !',
-  'You\'re close to the end !',
-  'Congrats sis !',
+  "You're close to the end !",
+  'Congrats !'
 ];
 
 export default encouragements;

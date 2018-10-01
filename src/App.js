@@ -11,17 +11,17 @@ class App extends React.Component {
   constructor() {
     super();
     const savedGoal = localStorage.getItem('goal');
-    const savedTimePerDay = localStorage.getItem('timePerDay');
+    // const savedTimePerDay = localStorage.getItem('timePerDay');
     const savedCompletedDays = localStorage.getItem('completedDays');
     let goal;
-    let timePerDay;
+    // let timePerDay;
     let completedDays;
     goal = savedGoal ? parseInt(savedGoal, 10) : 100;
-    timePerDay = savedTimePerDay > 0 ? parseInt(savedTimePerDay, 10) : 360;
+    //timePerDay = savedTimePerDay > 0 ? parseInt(savedTimePerDay, 10) : 360;
     completedDays = savedCompletedDays ? parseInt(savedCompletedDays, 10) : 0;
     this.state = {
       goal: goal,
-      timePerDay: timePerDay,
+      timePerDay: 3600, // 1 hour, but will become a changeable setting in the future
       completedDays: completedDays,
       isOnClockMode: false,
       isClockPaused: true,
@@ -63,7 +63,7 @@ class App extends React.Component {
         timePerDay: inputTimePerDay
       },
       () => {
-        localStorage.setItem('timePerDay', this.state.timePerDay);
+        //localStorage.setItem('timePerDay', this.state.timePerDay);
         localStorage.setItem('goal', this.state.goal);
         this.forceUpdate();
       }
