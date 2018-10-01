@@ -15,8 +15,12 @@ class ProgressBar extends React.Component {
     this.timer = setTimeout(() => this.progress(0, this.props.counter), 100);
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    return { completed: nextProps.counter };
+  }
+
   shouldComponentUpdate(nextProps, prevState) {
-    if (prevState.completed === nextProps.counter) {
+    if (this.props.counter === nextProps.counter) {
       return false;
     } else if (nextProps.isOnClockMode) {
       this.setState({ completed: nextProps.counter });

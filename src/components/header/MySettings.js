@@ -90,7 +90,7 @@ class MySettings extends Component {
           <h5 style={styles.text}>
             Inital rules of the 100 days of code challenge: code everyday for 1
             hour for a 100 days straight! But feel free to set your own
-            objectives that corresponds you best.
+            objectives that corresponds you best. More settings coming soon !
           </h5>
           <div style={styles.settingRow}>
             <h5 style={styles.text}>Number of days to reach :</h5>
@@ -101,7 +101,7 @@ class MySettings extends Component {
               id="input_goal"
             />
           </div>
-          <div style={styles.settingRow}>
+          {/* <div style={styles.settingRow}>
             <h5 style={styles.text}>Time per day :</h5>
             <TextField
               style={styles.textField}
@@ -109,7 +109,7 @@ class MySettings extends Component {
               hintText="(hh):mm"
               id="input_time_per_day"
             />
-          </div>
+          </div> */}
         </Dialog>
       </React.Fragment>
     );

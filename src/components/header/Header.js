@@ -13,7 +13,7 @@ const Header = ({
   ...settingsProps
 }) => (
   <div style={styles.header}>
-    <h1 style={styles.appTitle}>My coding log</h1>
+    <h1 style={styles.appTitle}>100DaysOfCode challenge</h1>
     <div style={styles.buttonsContainer}>
       <TimerButton
         handleClickTimer={handleClickTimer}

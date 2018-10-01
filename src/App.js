@@ -31,18 +31,17 @@ class App extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    // if (!nextState.isOnClockMode && !this.state.isOnClockMode) {
-    //   if (
-    //     (nextState.goal === this.state.goal ||
-    //       nextState.timePerDay === this.state.timePerDay ||
-    //       nextState.startingDate === this.state.startingDate) &&
-    //     nextState.completedDays === this.state.completedDays
-    //   ) {
-    //     console.log('wont update');
-    //     return false;
-    //   }
-    // }
-    console.log('will update');
+    // Component should not update if only the timer has changed
+    if (!nextState.isOnClockMode && !this.state.isOnClockMode) {
+      if (
+        (nextState.inputGoal === this.state.goal ||
+          nextState.timePerDay === this.state.timePerDay ||
+          nextState.startingDate === this.state.startingDate) &&
+        nextState.completedDays === this.state.completedDays
+      ) {
+        return false;
+      }
+    }
     return true;
   }
 
@@ -56,20 +55,19 @@ class App extends React.Component {
   };
 
   handleClickSave = ({ inputTimePerDay, inputGoal }) => {
-    console.log(inputGoal);
+    // TODO: issue here, setState called but not updating
+    // That's why we have to force the update,
     this.setState(
-      () => ({
+      {
         goal: inputGoal,
         timePerDay: inputTimePerDay
-      }),
-      this.saveToLocalStorage
+      },
+      () => {
+        localStorage.setItem('timePerDay', this.state.timePerDay);
+        localStorage.setItem('goal', this.state.goal);
+        this.forceUpdate();
+      }
     );
-  };
-
-  saveToLocalStorage = () => {
-    console.log('saved to local storage');
-    localStorage.setItem('timePerDay', this.state.timePerDay);
-    localStorage.setItem('goal', this.state.goal);
   };
 
   handleClickTimer = () => {
